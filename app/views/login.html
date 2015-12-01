@@ -7,7 +7,7 @@
 
       <md-input-container class="md-block">
         <label><img src="images/icon_username.png" style="height: 13px">Phone</label>
-        <input type="number" placeholder="Phone" name="phone" ng-model="user.phone" ng-minlength="10"
+        <input type="number" name="phone" ng-model="user.phone" ng-minlength="10"
                ng-maxlength="10" required>
 
         <div ng-messages="loginForm.phone.$error" ng-if="loginForm.$submitted">
@@ -31,10 +31,17 @@
       <md-checkbox ng-model="data.cb1" aria-label="Remember me" class="md-primary">
         Remember me
       </md-checkbox>
-      <div layout="column" layout-align="center stretch">
-      <md-button class="md-raised md-primary">Primary</md-button>
+      <div layout="row" layout-align="center">
+        <md-button class="md-raised md-primary" flex="90">Login</md-button>
+
       </div>
     </form>
+    <div layout="row" layout-align="center" style="margin-bottom: 10px;margin-top: 10px">
+      <a flex="90" href="#" >Forgot password?</a>
+    </div>
+    <div layout="row" layout-align="center">
+      <md-button flex="90" class="md-raised md-accent">Sign Up</md-button>
+    </div>
   </md-content>
 </div>
 <!--

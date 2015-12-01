@@ -12,9 +12,12 @@ angular.module('quickRideApp', [
     $openFB.init({appId: '1524191344558710'});
   })
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider,$mdThemingProvider) {
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];
     window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
+    $mdThemingProvider.theme('default')
+      .primaryPalette('green')
+      .accentPalette('amber');
     $urlRouterProvider.otherwise('/landing');
     $stateProvider
 
