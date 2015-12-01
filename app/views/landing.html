@@ -1,0 +1,8 @@
+<div style="height: 500px;width: 500px;">
+  <ul rn-carousel class="image" style="width: 100%;height: 100%">
+    <li ng-repeat="image in carouselImages">
+      <div><p>{{image.text}}</p></div>
+      <div class="layer"><img ng-src="{{image.url}}"></div>
+    </li>
+  </ul>
+</div>

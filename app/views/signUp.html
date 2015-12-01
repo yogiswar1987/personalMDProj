@@ -1,0 +1,79 @@
+<ion-view title="Sign Up">
+  <ion-nav-bar class="bar-stable">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <form name="signUpForm" ng-submit="signUp(signUpForm)" novalidate>
+      <div class="list" style="margin-bottom: 0px !important;">
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-android-phone-portrait larger">Phone</span>
+          <input type="text" placeholder="Phone" ng-model="signUpData.phone" name="phone" ng-model="user.phone"
+                 ng-minlength="10"
+                 ng-maxlength="10" required>
+           <span class="ion-alert-circled icon-custom" ng-show="signUpForm.$submitted && signUpForm.phone.$invalid">
+            <div class="input-error" ng-messages="signUpForm.phone.$error" ng-if="signUpForm.$submitted">
+              <p ng-message="minlength">Invalid phone number</p>
+
+              <p ng-message="maxlength">Phone number should be only 10 numbers</p>
+
+              <p ng-message="required">Phone number required</p>
+            </div>
+          </span>
+        </label>
+
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-key larger">Password</span>
+          <input type="password" placeholder="Password" ng-model="signUpData.pwd" name="password" ng-model="user.pwd"
+                 ng-minlength="4" required>
+          <span class="ion-alert-circled icon-custom" ng-if="signUpForm.$submitted && signUpForm.password.$invalid">
+            <div class="input-error" ng-messages="signUpForm.password.$error" ng-if="signUpForm.$submitted">
+              <p ng-message="minlength">Invalid password</p>
+
+              <p ng-message="required">Password required</p>
+            </div>
+          </span>
+        </label>
+
+        <label class="item item-input item-floating-label">
+          <span class="input-label icon ion-person larger">Name</span>
+          <input type="text" placeholder="Name" ng-model="signUpData.name" name="name" required>
+          <span class="ion-alert-circled icon-custom" ng-show="signUpForm.$submitted && signUpForm.name.$invalid">
+            <div class="input-error" ng-messages="signUpForm.name.$error" ng-if="signUpForm.$submitted">
+
+              <p ng-message="required">Name required</p>
+            </div>
+          </span>
+        </label>
+
+        <div class="row">
+          <li class="item item-checkbox checkbox-balanced col-50">
+            <label class="checkbox">
+              <input type="checkbox" ng-change="female = false" ng-model="male">
+            </label>
+            Male
+          </li>
+          <li class="item item-checkbox checkbox-balanced col-50">
+            <label class="checkbox">
+              <input type="checkbox" ng-change="male = false" ng-model="female">
+            </label>
+            Female
+          </li>
+        </div>
+      </div>
+      <div class="buttondiv"><a href="#">
+        <button class="col button button-clear button-calm" style="text-align: left" ng-click="showPopup()">Have a promo
+          code?
+        </button>
+      </a></div>
+      <div class="buttondiv">
+        <button type="submit" class="button button-block button-balanced">Sign Up</button>
+      </div>
+      <span style="margin-left: 5%">By Sign Up, I agree to <a href="terms.html">Quick Ride Terms</a></span>
+
+    </form>
+  </ion-content>
+</ion-view>
+<div class="bar bar-footer bar-assertive" ng-show="error">
+  <div class="title">{{ error.message }}</div>
+</div>

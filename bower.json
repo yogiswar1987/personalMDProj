@@ -1,0 +1,11 @@
+{
+  "name": "quickRide",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular-ui-router": "~0.2.15",
+    "angular-material": "~0.11.4",
+    "ngOpenFB": "*",
+    "angular-carousel": "~1.0.1"
+  },
+  "devDependencies": {}
+}

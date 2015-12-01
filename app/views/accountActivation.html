@@ -1,0 +1,39 @@
+<ion-view title="Activate Account">
+  <ion-content>
+    <div style="padding-top:20px;padding-bottom: 20px;text-align: center">
+      <img src="/images/quickride.png" style="height:80px;"></div>
+    <form name="accountActivationForm" ng-submit="activateAccount(accountActivationForm)" novalidate>
+      <div style="text-align: center">
+        <span style="text-align: center"> Thank you for registering with Quick Ride!</span> <br>
+        <span style="text-align: center"> We sent activation code through SMS       </span>
+      </div>
+
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Activation code</span>
+        <input type="text" placeholder="Activation code" ng-model="activationData.activationCode" name="activationCode"
+               required ng-minlength="4">
+        <span class="ion-alert-circled icon-custom"
+              ng-show="accountActivationForm.$submitted && accountActivationForm.activationCode.$invalid">
+            <div class="input-error" ng-messages="accountActivationForm.activationCode.$error"
+                 ng-if="accountActivationForm.$submitted">
+              <p ng-message="minlength">Invalid activation code</p>
+
+              <p ng-message="maxlength">Phone number should be only 10 numbers</p>
+
+              <p ng-message="required">Activation code required</p>
+            </div>
+          </span>
+      </label>
+
+      <div class="buttondiv">
+        <button type="submit" class="button button-block button-balanced">Activate</button>
+      </div>
+    </form>
+    <div class="buttondiv">
+      <button class="col button button-clear button-calm" style="text-align: left" ng-click="resendActivationCode()">Resend activation code</button>
+    </div>
+  </ion-content>
+</ion-view>
+<div class="bar bar-footer bar-assertive" ng-show="error">
+  <div class="title">{{ error.message }}</div>
+</div>
