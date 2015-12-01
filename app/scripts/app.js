@@ -4,6 +4,7 @@
 angular.module('quickRideApp', [
   'ui.router',
   'ngMaterial',
+  'ngMessages',
   'angular-carousel',
   'ngOpenFB'
 ])
