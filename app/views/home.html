@@ -1,3 +1,40 @@
+<div  layout="column" style="height:500px;" ng-cloak>
+  <section layout="row" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        <md-button ng-click="close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide-md show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p>
+      </md-content>
+    </md-sidenav>
+    <md-content flex>
+      <md-toolbar>
+        <div class="md-toolbar-tools" style="padding: 0px;">
+          <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+            <ng-md-icon icon="menu"></ng-md-icon>
+          </div>
+          <h3>
+            Quick Ride
+          </h3>
+          <span flex></span>
+        </div>
+      </md-toolbar>
+      <div layout="column" layout-fill layout-align="top center" ui-view>
+
+      </div>
+      <div flex></div>
+    </md-content>
+  </section>
+</div>
+
+<!--
 <ion-side-menus >
   <ion-side-menu-content>
     <ion-nav-bar class="bar-stable nav-title-slide-ios7" align-title="left">
@@ -39,60 +76,4 @@
       </ion-list>
     </ion-content>
   </ion-side-menu>
-</ion-side-menus>
-
-<!--
-<ion-side-menus>
-  &lt;!&ndash; Center content &ndash;&gt;
-  <ion-nav-bar class="nav-title-slide-ios7 has-tabs-top">
-    <ion-nav-buttons side="left">
-      <button class="button button-icon icon ion-navicon"  style="margin-left: -22px">
-      </button>
-    </ion-nav-buttons>
-    <ion-nav-title>
-      Quick Ride
-    </ion-nav-title>
-  </ion-nav-bar>
-
-  <ion-side-menu-content>
-    <ion-view>
-      <ion-content class="has-header">
-      </ion-content>
-    </ion-view>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-  </ion-side-menu-content>
-
-  <ion-side-menu side="left" expose-aside-when="large">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Quick Ride</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item menu-close>
-          New Ride
-        </ion-item>
-        <ion-item menu-close>
-          My Rides
-        </ion-item>
-        <ion-item menu-close>
-          My Rewards
-        </ion-item>
-        <ion-item menu-close>
-          Share & Earn
-        </ion-item>
-        <ion-item menu-close>
-          Feedback
-        </ion-item>
-        <ion-item menu-open href="#/app/changePassword">
-          Password
-        </ion-item>
-        <ion-item menu-close ng-click="logout()">
-          Logout
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
-
-
-</ion-side-menus>
--->
+</ion-side-menus>-->

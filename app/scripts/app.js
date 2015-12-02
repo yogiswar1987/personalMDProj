@@ -4,6 +4,7 @@
 angular.module('quickRideApp', [
   'ui.router',
   'ngMaterial',
+  'ngMdIcons',
   'ngMessages',
   'angular-carousel',
   'ngOpenFB'
@@ -12,7 +13,7 @@ angular.module('quickRideApp', [
     $openFB.init({appId: '1524191344558710'});
   })
 
-  .config(function ($stateProvider, $urlRouterProvider,$mdThemingProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];
     window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
     $mdThemingProvider.theme('default')
@@ -87,12 +88,8 @@ angular.module('quickRideApp', [
       })
       .state('app.changePassword', {
         url: '/changePassword',
-        views: {
-          'menuContent': {
-            templateUrl: 'views/changePassword.html',
-            controller: 'ChangePasswordCtrl'
-          }
-        }
+        templateUrl: 'views/changePassword.html',
+        controller: 'ChangePasswordCtrl'
       })
       .state('app.single', {
         url: '/playlists/:playlistId',

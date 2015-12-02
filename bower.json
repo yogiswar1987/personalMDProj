@@ -6,7 +6,8 @@
     "angular-material": "~0.11.4",
     "ngOpenFB": "*",
     "angular-carousel": "~1.0.1",
-    "angular-messages": "~1.4.8"
+    "angular-messages": "~1.4.8",
+    "material-design-icons": "~2.1.1"
   },
   "devDependencies": {}
 }

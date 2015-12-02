@@ -1,7 +1,27 @@
 angular.module('quickRideApp')
 
-  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService',
-    function ($rootScope, $scope, $timeout, $location, authenticationService) {
+  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService','$mdSidenav',
+    function ($rootScope, $scope, $timeout, $location, authenticationService,$mdSidenav) {
+      $scope.menu = [
+        {
+          link: '',
+          title: 'Dashboard',
+          icon: 'dashboard'
+        },
+        {
+          link: '',
+          title: 'Friends',
+          icon: 'group'
+        },
+        {
+          link: '',
+          title: 'Messages',
+          icon: 'message'
+        }
+      ];
+      $scope.toggleSidenav = function(menuId) {
+        $mdSidenav(menuId).toggle();
+      };
       $rootScope.showNavBar = false;
       $scope.logout = function () {
         authenticationService.logout();
@@ -25,6 +45,7 @@ angular.module('quickRideApp')
     $rootScope.showNavBar = true;
     $scope.male = true;
     $scope.signUpData = {};
+    $scope.signUpData.gender = 'M';
     // Triggered on a button click, or some other target
     $scope.showPopup = function () {
       $scope.data = {}
@@ -91,7 +112,10 @@ angular.module('quickRideApp')
   }])
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
   }).controller('LandingCtrl', ['$scope', '$timeout', '$openFB', 'AuthenticationService', '$location', '$rootScope', function ($scope, $timeout, $openFB, authenticationService, $location, $rootScope) {
-    $scope.carouselImages = [{url: 'images/splash_img1.png',text:'display text'}, {url: 'images/splash_img2.png'}, {url: 'images/splash_img3.png'}, {url: 'images/splash_img4.png'}, {url: 'images/splash_img5.png'}, {url: 'images/splash_img6.png'}, {url: 'images/splash_img7.png'}];
+    $scope.carouselImages = [{
+      url: 'images/splash_img1.png',
+      text: 'display text'
+    }, {url: 'images/splash_img2.png'}, {url: 'images/splash_img3.png'}, {url: 'images/splash_img4.png'}, {url: 'images/splash_img5.png'}, {url: 'images/splash_img6.png'}, {url: 'images/splash_img7.png'}];
     if (authenticationService.isSessionValid()) {
       $location.url('app/browse');
     }

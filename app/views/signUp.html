@@ -1,3 +1,52 @@
+<div layout="column" ng-cloak>
+  <md-content layout-padding>
+    <div style="padding-top:15px;padding-bottom: 15px;text-align: center">
+      <img src="images/quickride.png" style="height:80px;"></div>
+    <form name="signUpForm" ng-submit="signUp(signUpForm)" novalidate>
+      <md-input-container class="md-block">
+        <label><img src="images/icon_username.png" style="height: 13px">Phone</label>
+        <input type="number" name="phone" ng-model="signUpData.phone" ng-minlength="10"
+               ng-maxlength="10" required>
+
+        <div ng-messages="signUpForm.phone.$error" ng-if="signUpForm.$submitted">
+          <div ng-message="minlength">Invalid phone number</div>
+          <div ng-message="maxlength">Phone number should be only 10 numbers</div>
+          <div ng-message="required">Phone number required</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label><img src="images/icon_password.png" style="height: 11px">Password</label>
+        <input type="password" name="password" ng-model="signUpData.pwd" required>
+
+        <div class="input-error" ng-messages="signUpForm.password.$error" ng-if="signUpForm.$submitted">
+          <div ng-message="required">Password required</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label><img src="images/icon_username.png" style="height: 13px">Name</label>
+        <input type="text" name="name" ng-model="signUpData.name" required>
+
+        <div ng-messages="signUpForm.name.$error" ng-if="signUpForm.$submitted">
+          <div ng-message="required">Name required</div>
+        </div>
+      </md-input-container>
+      <md-radio-group ng-model="signUpData.gender" layout="row" layout-align="center">
+        <div flex="25" style="margin: auto;">Gender :</div>
+        <md-radio-button value="M" class="md-primary" flex="30">Male</md-radio-button>
+        <md-radio-button value="F" flex="30"> Female</md-radio-button>
+      </md-radio-group>
+      <div layout="row" layout-align="center" style="margin-bottom: 10px;margin-top: 10px">
+        <a flex="90" href="#">Have a promo code?</a>
+      </div>
+      <div layout="row" layout-align="center">
+        <md-button flex="90" class="md-raised md-primary">Sign Up</md-button>
+      </div>
+      <div layout="row" style="margin-bottom: 10px;margin-top: 10px">By Signing Up, I agree to <a href="terms.html">Quick
+        Ride Terms</a></div>
+    </form>
+  </md-content>
+</div>
+<!--
 <ion-view title="Sign Up">
   <ion-nav-bar class="bar-stable">
     <ion-nav-back-button>
@@ -77,3 +126,4 @@
 <div class="bar bar-footer bar-assertive" ng-show="error">
   <div class="title">{{ error.message }}</div>
 </div>
+-->

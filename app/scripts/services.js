@@ -9,7 +9,6 @@ angular.module('quickRideApp')
         return phone;
       },
       signUp: function (signUpData) {
-        signUpData.gender = "M";
         var urlOpts = {
           method: 'POST',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
