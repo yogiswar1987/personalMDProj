@@ -10,6 +10,7 @@
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
+  var compression = require('compression');
 
   grunt.initConfig({
     yeoman: {
@@ -54,12 +55,18 @@ module.exports = function (grunt) {
       }
     },
     connect: {
+
       server: {
         options: {
           port: 9001,
           hostname: '0.0.0.0',
           base: 'app',
-          keepalive: true
+          keepalive: true,
+          middleware: function(connect, options, middlewares) {
+            console.log(connect);
+            middlewares.unshift(compression());
+            return middlewares;
+          }
         }
       }
     },
@@ -112,8 +119,8 @@ module.exports = function (grunt) {
     // not used since Uglify task does concat,
     // but still available if needed
     /*concat: {
-      dist: {}
-    },*/
+     dist: {}
+     },*/
     rev: {
       dist: {
         files: {
@@ -179,14 +186,14 @@ module.exports = function (grunt) {
       dist: {
         options: {
           /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
+           // https://github.com/yeoman/grunt-usemin/issues/44
+           //collapseWhitespace: true,
+           collapseBooleanAttributes: true,
+           removeAttributeQuotes: true,
+           removeRedundantAttributes: true,
+           useShortDoctype: true,
+           removeEmptyAttributes: true,
+           removeOptionalTags: true*/
         },
         files: [{
           expand: true,
