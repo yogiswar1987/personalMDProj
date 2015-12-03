@@ -1,7 +1,7 @@
 angular.module('quickRideApp')
 
-  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService','$mdSidenav',
-    function ($rootScope, $scope, $timeout, $location, authenticationService,$mdSidenav) {
+  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav',
+    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav) {
       $scope.menu = [
         {
           link: '',
@@ -19,7 +19,7 @@ angular.module('quickRideApp')
           icon: 'message'
         }
       ];
-      $scope.toggleSidenav = function(menuId) {
+      $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
       };
       $rootScope.showNavBar = false;
@@ -112,10 +112,33 @@ angular.module('quickRideApp')
   }])
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
   }).controller('LandingCtrl', ['$scope', '$timeout', '$openFB', 'AuthenticationService', '$location', '$rootScope', function ($scope, $timeout, $openFB, authenticationService, $location, $rootScope) {
-    $scope.carouselImages = [{
+    $scope.slides = [{
       url: 'images/splash_img1.png',
-      text: 'display text'
-    }, {url: 'images/splash_img2.png'}, {url: 'images/splash_img3.png'}, {url: 'images/splash_img4.png'}, {url: 'images/splash_img5.png'}, {url: 'images/splash_img6.png'}, {url: 'images/splash_img7.png'}];
+      text: 'One app for ride share,carpool and taxi share for daily commuting'
+    }, {
+      url: 'images/splash_img2.png',
+      text: 'Ride now or later from any location'
+    },
+      {
+        url: 'images/splash_img3.png',
+        text: 'View matching riders going same route and join them instantly'
+      },
+      {
+        url: 'images/splash_img4.png',
+        text: 'Check detailed profile, when the person is unknown'
+      }, {
+        url: 'images/splash_img5.png',
+        text: 'Track the location of co riders live on map and coordinate with group chat'
+      },
+      {
+        url: 'images/splash_img6.png',
+        text: 'Pay cash less with Quickride points'
+      }, {
+        url: 'images/splash_img7.png',
+        text: 'Redeem the points to get free fuel'
+      }];
+
+
     if (authenticationService.isSessionValid()) {
       $location.url('app/browse');
     }
