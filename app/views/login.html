@@ -2,10 +2,10 @@
 
   <md-content layout-padding>
     <div style="padding-top:15px;padding-bottom: 15px;text-align: center">
-      <img src="images/quickride.png" style="height:80px;"></div>
+      <img src="/images/quickride.png" style="height:80px;"></div>
     <form name="loginForm" ng-submit="login(loginForm)" novalidate>
       <md-input-container class="md-block">
-        <label><img src="images/icon_username.png" style="height: 13px">Phone</label>
+        <label><img src="/images/icon_username.png" style="height: 13px">Phone</label>
         <input type="number" name="phone" ng-model="user.phone" ng-minlength="10"
                ng-maxlength="10" required>
 
@@ -16,7 +16,7 @@
         </div>
       </md-input-container>
       <md-input-container class="md-block">
-        <label><img src="images/icon_password.png" style="height: 11px">Password</label>
+        <label><img src="/images/icon_password.png" style="height: 11px">Password</label>
         <input type="password" name="password" ng-model="user.pwd" required>
 
         <div class="input-error" ng-messages="loginForm.password.$error" ng-if="loginForm.$submitted">
@@ -38,63 +38,3 @@
     </div>
   </md-content>
 </div>
-<!--
-<ion-view title="Login">
-  <ion-content>
-    <div style="padding-top:15px;padding-bottom: 15px;text-align: center"><img src="/img/quickride.png"
-                                                                               style="height:80px;"></div>
-    <form name="loginForm" ng-submit="login(loginForm)" novalidate>
-      <div class="list">
-        <label class="item item-input item-floating-label">
-          <span class="input-label icon ion-android-phone-portrait larger ion-alert-circled">Phone</span>
-          <input type="number" placeholder="Phone" name="phone" ng-model="user.phone" ng-minlength="10"
-                 ng-maxlength="10" required>
-          <span class="ion-alert-circled icon-custom" ng-show="loginForm.$submitted && loginForm.phone.$invalid">
-            <div class="input-error" ng-messages="loginForm.phone.$error" ng-if="loginForm.$submitted">
-              <p ng-message="minlength">Invalid phone number</p>
-
-              <p ng-message="maxlength">Phone number should be only 10 numbers</p>
-
-              <p ng-message="required">Phone number required</p>
-            </div>
-          </span>
-        </label>
-
-        <label class="item item-input item-floating-label">
-          <span class="input-label icon ion-key larger">Password</span>
-          <input type="password" name="password" placeholder="Password" ng-model="user.pwd" ng-minlength="4" required>
-          <span class="ion-alert-circled icon-custom" ng-if="loginForm.$submitted && loginForm.password.$invalid">
-            <div class="input-error" ng-messages="loginForm.password.$error" ng-if="loginForm.$submitted">
-              <p ng-message="minlength">Invalid password</p>
-
-              <p ng-message="required">Password required</p>
-            </div>
-          </span>
-        </label>
-
-        <li class="item item-checkbox checkbox-balanced">
-          <label class="checkbox">
-            <input type="checkbox" ng-model="user.rememberme">
-          </label>
-          Remember me
-        </li>
-      </div>
-
-      <div class="buttondiv">
-        <button type="submit" class="col button button-block button-energized">Login</button>
-      </div>
-      <div class="buttondiv"><a href="#/auth/forgotPassword">
-        <button class="col button button-clear button-calm" style="text-align: left">Forgot Password?</button>
-      </a></div>
-      <div class="buttondiv">
-        <a href="#/auth/signUp">
-          <button class="col button button-block button-balanced">SignUp</button>
-        </a>
-      </div>
-    </form>
-  </ion-content>
-</ion-view>
-<div class="bar bar-footer bar-assertive" ng-show="error">
-  <div class="title">{{ error.message }}</div>
-</div>
--->
