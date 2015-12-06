@@ -38,7 +38,11 @@ angular.module('quickRideApp', [
         templateUrl: "views/login.html",
         controller: "LoginCtrl"
       })
-      .state('auth.signUp', {
+      .state('auth.profile', {
+        url: "/profile",
+        templateUrl: "views/profile.html",
+        controller: "ProfileCtrl"
+      })      .state('auth.signUp', {
         url: "/signUp",
         templateUrl: "views/signUp.html",
         controller: "SignUpCtrl"

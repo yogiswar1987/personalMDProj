@@ -1,0 +1,44 @@
+<div layout="column" ng-cloak>
+  <div layout="row" layout-align="center" class="divMargin">
+    <img style="height:200px;" ng-src="/images/default_male.png">
+  </div>
+
+  <div layout="row" layout-align="center" class="divMargin">
+    <span>{{profile.name}}</span>
+  </div>
+
+  <div layout="row" layout-align="center" class="divLessMargin" ng-if="profile.designation">
+    <ng-md-icon icon="dashboard"></ng-md-icon>
+    <span>{{profile.designation}}</span>
+  </div>
+
+  <div layout="row" layout-align="center" class="divLessMargin" ng-if="profile.email">
+    <span>{{profile.email}}</span>
+  </div>
+
+  <div layout="row" layout-align="center" class="divLessMargin">
+    <span>verify now</span>
+  </div>
+
+  <div layout="row" class="divMargin" style="border:1px lightgrey dotted;">
+
+  </div>
+
+  <div layout="row" layout-align="center" class="divMargin">
+    <div layout="column" flex="30">
+      <div layout="column"><span>Total Rides</span></div>
+      <div layout="column" class="divLessMargin"><span>{{profile.totalRides}}</span></div>
+    </div>
+
+    <div layout="column" flex="30">
+      <div layout="column"><span>As Rider</span></div>
+      <div layout="column" class="divLessMargin"><span>0</span></div>
+    </div>
+
+    <div layout="column" flex="30">
+      <div layout="column"><span>As Passenger</span></div>
+      <div layout="column" class="divLessMargin"><span>0</span></div>
+    </div>
+  </div>
+</div>
+

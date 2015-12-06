@@ -209,7 +209,22 @@ angular.module('quickRideApp')
         });
       }
     }
-  }]).controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, accountService, authenticationService, $location) {
+  }]).controller('ProfileCtrl', ['$scope','AccountService','AuthenticationService', function ($scope, accountService,authenticationService) {
+    $scope.profile = {};
+    accountService.getProfileDetails(authenticationService.getPhone()).success(function (data) {
+      var response = data.resultData;
+      $scope.profile.name = response.user.name;
+      $scope.profile.designation = response.user.designation;
+      $scope.profile.email = response.user.email;
+      $scope.profile.asRider = response.user.noofridesasrider ? response.user.noofridesasrider : 0;
+      $scope.profile.asPassenger = response.user.noofridesaspassenger ? response.user.noofridesaspassenger : 0;
+      $scope.profile.totalRides = $scope.profile.asRider + $scope.profile.asPassenger;
+
+    }).error(function (error) {
+      console.log(error);
+    });
+  }])
+  .controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, accountService, authenticationService, $location) {
     if (!authenticationService.getPhone()) {
       $location.path('/auth/login');
     } else {

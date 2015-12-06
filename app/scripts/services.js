@@ -105,6 +105,14 @@ angular.module('quickRideApp')
           data: {phone:phone}
         };
         return $http(urlOpts);
+      },
+      getProfileDetails: function (phone){
+        phone= '9739001010';
+        var urlOpts = {
+          method: 'GET',
+          url: BASE_URL + 'QRUser/completeProfile?userId=' + phone
+        };
+        return $http(urlOpts);
       }
     }
   }]);

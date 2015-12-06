@@ -68,7 +68,8 @@ md-sidenav ng-md-icon {
 
 .landing {
   width: 100%;
-  height: 100%;
+/*  height: 100%;*/
+
 }
 
 .landingupper {
@@ -94,4 +95,12 @@ md-sidenav ng-md-icon {
 
 .text-landing{
   color: white;
+}
+
+.divMargin{
+  margin-top:5%;
+}
+
+.divLessMargin{
+  margin-top: 2%;
 }
