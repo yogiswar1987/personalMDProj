@@ -61,12 +61,7 @@ module.exports = function (grunt) {
           port: 9001,
           hostname: '0.0.0.0',
           base: 'app',
-          keepalive: true,
-          middleware: function(connect, options, middlewares) {
-            console.log(connect);
-            middlewares.unshift(compression());
-            return middlewares;
-          }
+          keepalive: true
         }
       }
     },
