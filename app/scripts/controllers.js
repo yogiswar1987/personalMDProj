@@ -40,62 +40,25 @@ angular.module('quickRideApp')
     ];
   })
 
-  .controller('SignUpCtrl', ['$rootScope', '$scope', 'AuthenticationService', '$location', function ($rootScope, $scope, authenticationService, $location) {
+  .controller('SignUpCtrl', ['$rootScope', '$scope', 'AuthenticationService', '$location','$mdDialog', function ($rootScope, $scope, authenticationService, $location, $mdDialog) {
 
     $rootScope.showNavBar = true;
     $scope.male = true;
     $scope.signUpData = {};
     $scope.signUpData.gender = 'M';
-    // Triggered on a button click, or some other target
-    $scope.showPopup = function () {
-      $scope.data = {}
 
-      // An elaborate, custom popup
-      var myPopup = $ionicPopup.show({
-        template: '<input type="text" ng-model="signUpData.promocode">',
-        title: 'Apply your promo code',
+
+    $scope.showPopup = function () {
+      $mdDialog.show({
+        clickOutsideToClose: true,
         scope: $scope,
-        buttons: [
-          {
-            text: '<b>Apply</b>',
-            type: 'button-balanced',
-            onTap: function (e) {
-              if (!$scope.signUpData.promocode) {
-                e.preventDefault();
-              } else {
-                authenticationService.checkReferralCode($scope.signUpData.promoode).success(function (data) {
-                  var alertPopup = $ionicPopup.alert({
-                    template: data,
-                    buttons: [
-                      {
-                        text: '<b>Ok</b>',
-                        type: 'button-balanced'
-                      }]
-                  });
-                  alertPopup.then(function (res) {
-                    console.log('promo code alert closed');
-                  });
-                }).error(function (error) {
-                  var alertPopup = $ionicPopup.alert({
-                    template: error.resultData.userMsg,
-                    buttons: [
-                      {
-                        text: '<b>Ok</b>',
-                        type: 'button-balanced'
-                      }]
-                  });
-                  alertPopup.then(function (res) {
-                    console.log(error);
-                  });
-                });
-              }
-            }
-          },
-          {text: 'Cancel'}
-        ]
-      });
-      myPopup.then(function (res) {
-        console.log('Tapped!', res);
+        preserveScope: true,
+        templateUrl: 'views/promoCode.html',
+        controller: function DialogController($scope, $mdDialog) {
+          $scope.closeDialog = function() {
+            $mdDialog.hide();
+          }
+        }
       });
     };
 
@@ -186,7 +149,7 @@ angular.module('quickRideApp')
         });
     };
 
-  }]).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+  }]).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService','$mdDialog', function ($scope, $location, AuthenticationService,$mdDialog) {
     $scope.user = {};
     $scope.login = function (loginForm) {
       if (loginForm.$valid) {
@@ -197,12 +160,16 @@ angular.module('quickRideApp')
           if (error.errorCode === 1007) {
             $location.path('auth/accountActivation')
           } else {
-            var alertPopup = $ionicPopup.alert({
-              template: error.resultData.userMsg,
-              okType: 'button-balanced'
-            });
-            alertPopup.then(function (res) {
-
+            $mdDialog.show({
+              clickOutsideToClose: true,
+              scope: $scope,
+              preserveScope: true,
+              templateUrl: 'views/loginError.html',
+              controller: function DialogController($scope, $mdDialog) {
+                $scope.closeDialog = function() {
+                  $mdDialog.hide();
+                }
+              }
             });
           }
           console.log(error);

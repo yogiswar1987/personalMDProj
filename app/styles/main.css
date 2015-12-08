@@ -1,5 +1,5 @@
 body {
-    background: #fafafa;
+    /*background: #fafafa;*/
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
@@ -104,3 +104,14 @@ md-sidenav ng-md-icon {
 .divLessMargin{
   margin-top: 2%;
 }
+
+.transparent{
+  background-color: transparent !important;
+}
+
+.quickRideImgStyle{
+  padding-top:15px;
+  padding-bottom: 15px;
+  text-align: center
+}
+

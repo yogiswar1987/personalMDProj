@@ -107,7 +107,6 @@ angular.module('quickRideApp')
         return $http(urlOpts);
       },
       getProfileDetails: function (phone){
-        phone= '9739001010';
         var urlOpts = {
           method: 'GET',
           url: BASE_URL + 'QRUser/completeProfile?userId=' + phone

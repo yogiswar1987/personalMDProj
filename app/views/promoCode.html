@@ -1,0 +1,29 @@
+<md-dialog aria-label="Apply promocode" flex="70">
+  <md-toolbar class="transparent">
+    <div class="md-toolbar-tools">
+      <h2>Apply your promo code</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+
+    <form name="promoCodeForm" novalidate layout="column">
+      <md-input-container>
+        <label>Promo code</label>
+        <input ng-model="code" name="code" required/>
+
+        <div ng-messages="promoCodeForm.code.$error"
+             ng-show="promoCodeForm.code.$touched">
+          <div ng-message="required">Promo code is required.</div>
+        </div>
+      </md-input-container>
+      <div layout="row" layout-align="center" class="divMargin">
+        <md-button flex="40" ng-click="applyPromoCode()" class="md-raised md-primary">
+          Apply
+        </md-button>
+        <md-button flex="40" ng-click="closeDialog()" class="md-raised">
+          Cancel
+        </md-button>
+      </div>
+    </form>
+  </md-dialog-content>
+</md-dialog>

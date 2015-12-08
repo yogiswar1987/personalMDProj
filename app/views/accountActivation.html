@@ -1,3 +1,45 @@
+<div layout="column" flex ng-cloak>
+  <md-content layout-padding
+    <div class="quickRideImgStyle">
+      <img src="/images/quickride.png" style="height:80px;">
+    </div>
+  <div layout="column" layout-align="center" style="margin-left: 5%;margin-right: 5%">
+    <div layout="column" layout-align="center" class="divMargin">
+      <span layout="row">Thank you for registering with Quick Ride!</span>
+      <span layout="row" class="divLessMargin">We sent activation code through SMS </span>
+    </div>
+
+    <form name="activateAccountForm" novalidate layout="column" class="divMargin" ng-submit="activateAccount(accountActivationForm)">
+      <md-input-container>
+        <label>Activation code</label>
+        <input ng-model="code" name="code" required/>
+
+        <div ng-messages="activateAccountForm.code.$error"
+             ng-show="activateAccountForm.code.$touched">
+          <div ng-message="required">Activation code is required.</div>
+        </div>
+      </md-input-container>
+
+      <div layout="row" layout-align="center" class="divMargin">
+        <md-button flex="100" ng-click="activate()" class="md-raised md-primary">
+          Activate
+        </md-button>
+        </div>
+      </form>
+
+      <div layout="row" class="divMargin">
+          <a href="#" ng-click="resendActivationCode()">Resend activation code</a>
+      </div>
+  </div>
+  </md-content>
+</div>
+
+
+
+
+
+
+<!--
 <ion-view title="Activate Account">
   <ion-content>
     <div style="padding-top:20px;padding-bottom: 20px;text-align: center">
@@ -37,3 +79,4 @@
 <div class="bar bar-footer bar-assertive" ng-show="error">
   <div class="title">{{ error.message }}</div>
 </div>
+-->
