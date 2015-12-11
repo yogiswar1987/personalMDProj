@@ -217,22 +217,25 @@ angular.module('quickRideApp')
         });
       }
     }
-  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, authenticationService) {
+  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService','$mdDialog', function ($scope, $location, authenticationService,$mdDialog) {
     $scope.user = {};
     $scope.resetPassword = function (forgotPasswordForm) {
       if (forgotPasswordForm.$valid) {
         authenticationService.resetPassword($scope.user).success(function (data) {
-          console.log(data);
-          var alertPopup = $ionicPopup.alert({
-            template: "New password for Quickride has sent to your registered mobile number",
-            okType: 'button-balanced'
-          });
-          alertPopup.then(function (res) {
-            $location.path("/auth/login");
+          $mdDialog.show({
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            templateUrl: 'views/forgotPasswordConfirm.html',
+            controller: function DialogController($scope, $mdDialog) {
+              $scope.closeDialog = function() {
+                $mdDialog.hide();
+              }
+            }
           });
 
         }).error(function (error) {
-          var alertPopup = $ionicPopup.alert({
+          /*var alertPopup = $ionicPopup.alert({
             template: error.resultData.userMsg,
             okType: 'button-balanced'
           });
@@ -240,7 +243,7 @@ angular.module('quickRideApp')
 
           });
 
-          console.log(error);
+          console.log(error);*/
         });
       }
     };
