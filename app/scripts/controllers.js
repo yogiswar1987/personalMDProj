@@ -40,7 +40,7 @@ angular.module('quickRideApp')
     ];
   })
 
-  .controller('SignUpCtrl', ['$rootScope', '$scope', 'AuthenticationService', '$location','$mdDialog', function ($rootScope, $scope, authenticationService, $location, $mdDialog) {
+  .controller('SignUpCtrl', ['$rootScope', '$scope', 'AuthenticationService', '$location', '$mdDialog', function ($rootScope, $scope, authenticationService, $location, $mdDialog) {
 
     $rootScope.showNavBar = true;
     $scope.male = true;
@@ -55,7 +55,7 @@ angular.module('quickRideApp')
         preserveScope: true,
         templateUrl: 'views/promoCode.html',
         controller: function DialogController($scope, $mdDialog) {
-          $scope.closeDialog = function() {
+          $scope.closeDialog = function () {
             $mdDialog.hide();
           }
         }
@@ -75,121 +75,146 @@ angular.module('quickRideApp')
   }])
   .controller('PlaylistCtrl', function ($scope, $stateParams) {
   }).controller('LandingCtrl', ['$scope', '$timeout', '$openFB', 'AuthenticationService', '$location', '$rootScope', function ($scope, $timeout, $openFB, authenticationService, $location, $rootScope) {
-    $scope.slides = [{
-      url: 'images/splash_img1.png',
-      text: 'One app for ride share,carpool and taxi share for daily commuting'
-    }, {
-      url: 'images/splash_img2.png',
-      text: 'Ride now or later from any location'
+  $scope.slides = [{
+    url: 'images/splash_img1.png',
+    text: 'One app for ride share,carpool and taxi share for daily commuting'
+  }, {
+    url: 'images/splash_img2.png',
+    text: 'Ride now or later from any location'
+  },
+    {
+      url: 'images/splash_img3.png',
+      text: 'View matching riders going same route and join them instantly'
     },
-      {
-        url: 'images/splash_img3.png',
-        text: 'View matching riders going same route and join them instantly'
-      },
-      {
-        url: 'images/splash_img4.png',
-        text: 'Check detailed profile, when the person is unknown'
-      }, {
-        url: 'images/splash_img5.png',
-        text: 'Track the location of co riders live on map and coordinate with group chat'
-      },
-      {
-        url: 'images/splash_img6.png',
-        text: 'Pay cash less with Quickride points'
-      }, {
-        url: 'images/splash_img7.png',
-        text: 'Redeem the points to get free fuel'
-      }];
+    {
+      url: 'images/splash_img4.png',
+      text: 'Check detailed profile, when the person is unknown'
+    }, {
+      url: 'images/splash_img5.png',
+      text: 'Track the location of co riders live on map and coordinate with group chat'
+    },
+    {
+      url: 'images/splash_img6.png',
+      text: 'Pay cash less with Quickride points'
+    }, {
+      url: 'images/splash_img7.png',
+      text: 'Redeem the points to get free fuel'
+    }];
 
 
-    if (authenticationService.isSessionValid()) {
-      $location.url('app/browse');
+  if (authenticationService.isSessionValid()) {
+    $location.url('app/browse');
+  }
+
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    var p = $location.path();
+    if (p.indexOf('auth') == -1 && !authenticationService.isSessionValid()) {
+      $location.path('#/auth/login');
+      $location.replace();
     }
-
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      var p = $location.path();
-      if (p.indexOf('auth') == -1 && !authenticationService.isSessionValid()) {
-        $location.path('#/auth/login');
-        $location.replace();
-      }
-    });
+  });
 
 
-    $scope.fbLogin = function () {
-      $openFB.login({scope: 'email'}).then(
-        function (response) {
-          if (response.status === 'connected') {
-            $openFB.api({
-              path: '/me',
-              params: {fields: 'id,name,email,gender,link,middle_name,first_name,last_name,cover,picture'}
-            }).then(
-              function (user) {
-                $scope.user = user;
-              },
-              function (error) {
-                alert('Facebook error: ' + error.error_description);
-              });
-            $openFB.api({
-              path: '/me/picture',
-              params: {
-                type: 'normal'
-              }
-            }).then(
-              function (user) {
-                $scope.picture = user;
-              },
-              function (error) {
-                alert('Facebook error: ' + error.error_description);
-              });
-            ;
-            console.log('Facebook login succeeded');
-          } else {
-            alert('Facebook login failed');
-          }
-        });
-    };
-
-  }]).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService','$mdDialog', function ($scope, $location, AuthenticationService,$mdDialog) {
-    $scope.user = {};
-    $scope.login = function (loginForm) {
-      if (loginForm.$valid) {
-        AuthenticationService.login($scope.user).success(function (data) {
-          console.log(data);
-          $location.path("/app/browse");
-        }).error(function (error) {
-          if (error.errorCode === 1007) {
-            $location.path('auth/accountActivation')
-          } else {
-            $mdDialog.show({
-              clickOutsideToClose: true,
-              scope: $scope,
-              preserveScope: true,
-              templateUrl: 'views/loginError.html',
-              controller: function DialogController($scope, $mdDialog) {
-                $scope.closeDialog = function() {
-                  $mdDialog.hide();
-                }
-              }
+  $scope.fbLogin = function () {
+    $openFB.login({scope: 'email'}).then(
+      function (response) {
+        if (response.status === 'connected') {
+          $openFB.api({
+            path: '/me',
+            params: {fields: 'id,name,email,gender,link,middle_name,first_name,last_name,cover,picture'}
+          }).then(
+            function (user) {
+              $scope.user = user;
+            },
+            function (error) {
+              alert('Facebook error: ' + error.error_description);
             });
-          }
-          console.log(error);
-        });
-      }
+          $openFB.api({
+            path: '/me/picture',
+            params: {
+              type: 'normal'
+            }
+          }).then(
+            function (user) {
+              $scope.picture = user;
+            },
+            function (error) {
+              alert('Facebook error: ' + error.error_description);
+            });
+          ;
+          console.log('Facebook login succeeded');
+        } else {
+          alert('Facebook login failed');
+        }
+      });
+  };
+
+}]).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService', '$mdDialog', function ($scope, $location, AuthenticationService, $mdDialog) {
+  $scope.user = {};
+  $scope.login = function (loginForm) {
+    if (loginForm.$valid) {
+      AuthenticationService.login($scope.user).success(function (data) {
+        console.log(data);
+        $location.path("/app/browse");
+      }).error(function (error) {
+        if (error.errorCode === 1007) {
+          $location.path('auth/accountActivation')
+        } else {
+          $mdDialog.show({
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            templateUrl: 'views/loginError.html',
+            controller: function DialogController($scope, $mdDialog) {
+              $scope.closeDialog = function () {
+                $mdDialog.hide();
+              }
+            }
+          });
+        }
+        console.log(error);
+      });
     }
-  }]).controller('ProfileCtrl', ['$scope','AccountService','AuthenticationService', function ($scope, accountService,authenticationService) {
+  }
+}]).controller('ProfileCtrl', ['$scope', 'ProfileService', 'AuthenticationService', '$q', function ($scope, profileService, authenticationService, $q) {
     $scope.profile = {};
-    accountService.getProfileDetails(authenticationService.getPhone()).success(function (data) {
+    $scope.vehicle = {};
+    profileService.getProfileDetails(authenticationService.getPhone()).success(function (data) {
       var response = data.resultData;
-      $scope.profile.name = response.user.name;
-      $scope.profile.designation = response.user.designation;
-      $scope.profile.email = response.user.email;
-      $scope.profile.asRider = response.user.noofridesasrider ? response.user.noofridesasrider : 0;
-      $scope.profile.asPassenger = response.user.noofridesaspassenger ? response.user.noofridesaspassenger : 0;
-      $scope.profile.totalRides = $scope.profile.asRider + $scope.profile.asPassenger;
+      $scope.profile.id = response.userProfile.id;
+      $scope.profile.confirmtype = response.userProfile.confirmtype;
+      $scope.profile.userName = response.userProfile.userName;
+      $scope.profile.companyname = response.userProfile.companyname;
+      $scope.profile.profession = response.userProfile.profession;
+      $scope.profile.aboutme = response.userProfile.aboutme;
+      $scope.profile.imageURI = response.userProfile.imageURI ? response.userProfile.imageURI : '/images/default_male.png';
+      $scope.profile.officeemail = response.userProfile.officeemail;
+      $scope.profile.facebook = response.userProfile.facebook;
+      $scope.profile.twitter = response.userProfile.twitter;
+      $scope.profile.linkedin = response.userProfile.linkedin;
+      $scope.profile.matchCompanyConstraint = response.userProfile.matchCompanyConstraint;
+      $scope.profile.matchGenderConstraint = response.userProfile.matchGenderConstraint;
+      $scope.profile.emergencyContactNumber = response.userProfile.emergencyContactNumber;
+
+      $scope.vehicle.model = response.vehicle.model;
+      $scope.vehicle.regno = response.vehicle.regno;
+      $scope.vehicle.capacity = response.vehicle.capacity;
+      $scope.vehicle.ownerid = response.userProfile.id;
+      $scope.vehicle.fare = response.vehicle.fare;
+      $scope.vehicle.imageURI = response.vehicle.imageURI ? response.vehicle.imageURI : '/images/suv.png';
 
     }).error(function (error) {
       console.log(error);
     });
+    $scope.updateProfile = function () {
+      var updateProfilePromise = profileService.updateProfileDetail($scope.profile);
+      var updateVehiclePromise = profileService.updateVehicleDetail($scope.vehicle);
+      $q.all([updateProfilePromise, updateVehiclePromise]).then(function (data) {
+        console.log(data);
+      }, function (data) {
+        console.log(data)
+      })
+    };
   }])
   .controller('AccountActivationCtrl', ['$scope', 'AccountService', 'AuthenticationService', '$location', function ($scope, accountService, authenticationService, $location) {
     if (!authenticationService.getPhone()) {
@@ -217,69 +242,69 @@ angular.module('quickRideApp')
         });
       }
     }
-  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService','$mdDialog', function ($scope, $location, authenticationService,$mdDialog) {
-    $scope.user = {};
-    $scope.resetPassword = function (forgotPasswordForm) {
-      if (forgotPasswordForm.$valid) {
-        authenticationService.resetPassword($scope.user).success(function (data) {
-          $mdDialog.show({
-            clickOutsideToClose: true,
-            scope: $scope,
-            preserveScope: true,
-            templateUrl: 'views/forgotPasswordConfirm.html',
-            controller: function DialogController($scope, $mdDialog) {
-              $scope.closeDialog = function() {
-                $mdDialog.hide();
-              }
+  }]).controller('ForgotPasswordCtrl', ['$scope', '$location', 'AuthenticationService', '$mdDialog', function ($scope, $location, authenticationService, $mdDialog) {
+  $scope.user = {};
+  $scope.resetPassword = function (forgotPasswordForm) {
+    if (forgotPasswordForm.$valid) {
+      authenticationService.resetPassword($scope.user).success(function (data) {
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/forgotPasswordConfirm.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
             }
-          });
-
-        }).error(function (error) {
-          /*var alertPopup = $ionicPopup.alert({
-            template: error.resultData.userMsg,
-            okType: 'button-balanced'
-          });
-          alertPopup.then(function (res) {
-
-          });
-
-          console.log(error);*/
+          }
         });
-      }
-    };
-  }]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService', function ($scope, $location, accountService, authenticationService) {
-    $scope.user = {};
-    $scope.changePassword = function (changePasswordForm) {
-      if (changePasswordForm.$valid) {
-        accountService.changePassword(authenticationService.getPhone(), $scope.user.old_pwd, $scope.user.new_pwd).success(function (data) {
-          console.log(data);
-          $scope.user.old_pwd = '';
-          $scope.user.new_pwd = '';
-        }).error(function (error) {
-          console.log(error);
-        });
-      }
-    };
-  }]).directive('confirmPwd', ['$interpolate', '$parse', function ($interpolate, $parse) {
-    return {
-      require: 'ngModel',
-      link: function (scope, elem, attr, ngModelCtrl) {
 
-        var pwdToMatch = $parse(attr.confirmPwd);
-        var pwdFn = $interpolate(attr.confirmPwd)(scope);
+      }).error(function (error) {
+        /*var alertPopup = $ionicPopup.alert({
+         template: error.resultData.userMsg,
+         okType: 'button-balanced'
+         });
+         alertPopup.then(function (res) {
 
-        scope.$watch(pwdFn, function (newVal) {
-          ngModelCtrl.$setValidity('password', ngModelCtrl.$viewValue == newVal);
-        })
+         });
 
-        ngModelCtrl.$validators.password = function (modelValue, viewValue) {
-          var value = modelValue || viewValue;
-          return value == pwdToMatch(scope).$modelValue;
-        };
-
-      }
+         console.log(error);*/
+      });
     }
-  }]).controller('NewRideCtrl', ['$scope', function ($scope) {
+  };
+}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService', function ($scope, $location, accountService, authenticationService) {
+  $scope.user = {};
+  $scope.changePassword = function (changePasswordForm) {
+    if (changePasswordForm.$valid) {
+      accountService.changePassword(authenticationService.getPhone(), $scope.user.old_pwd, $scope.user.new_pwd).success(function (data) {
+        console.log(data);
+        $scope.user.old_pwd = '';
+        $scope.user.new_pwd = '';
+      }).error(function (error) {
+        console.log(error);
+      });
+    }
+  };
+}]).directive('confirmPwd', ['$interpolate', '$parse', function ($interpolate, $parse) {
+  return {
+    require: 'ngModel',
+    link: function (scope, elem, attr, ngModelCtrl) {
+
+      var pwdToMatch = $parse(attr.confirmPwd);
+      var pwdFn = $interpolate(attr.confirmPwd)(scope);
+
+      scope.$watch(pwdFn, function (newVal) {
+        ngModelCtrl.$setValidity('password', ngModelCtrl.$viewValue == newVal);
+      })
+
+      ngModelCtrl.$validators.password = function (modelValue, viewValue) {
+        var value = modelValue || viewValue;
+        return value == pwdToMatch(scope).$modelValue;
+      };
+
+    }
+  }
+}]).controller('NewRideCtrl', ['$scope', function ($scope) {
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
     var mapOptions = {
@@ -409,7 +434,7 @@ angular.module('quickRideApp')
   }]).controller('OfferRideCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', 'ProfileService', function ($scope, rideManagementService, authenticationService, profileService) {
   profileService.getVehicle(authenticationService.getPhone()).success(function (data) {
     $scope.vehicle = data.resultData;
-  }).error(function(data){
+  }).error(function (data) {
     console.log(data);
   });
   $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));

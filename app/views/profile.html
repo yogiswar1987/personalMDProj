@@ -1,44 +1,150 @@
-<div layout="column" flex ng-cloak>
-  <div layout="row" layout-align="center" class="divMargin">
-    <img style="height:200px;" ng-src="/images/default_male.png">
-  </div>
-
-  <div layout="row" layout-align="center" class="divMargin">
-    <span>{{profile.name}}</span>
-  </div>
-
-  <div layout="row" layout-align="center" class="divLessMargin" ng-if="profile.designation">
-    <ng-md-icon icon="dashboard"></ng-md-icon>
-    <span>{{profile.designation}}</span>
-  </div>
-
-  <div layout="row" layout-align="center" class="divLessMargin" ng-if="profile.email">
-    <span>{{profile.email}}</span>
-  </div>
-
-  <div layout="row" layout-align="center" class="divLessMargin">
-    <span>verify now</span>
-  </div>
-
-  <div layout="row" class="divMargin" style="border:1px lightgrey dotted;">
-
-  </div>
-
-  <div layout="row" layout-align="center" class="divMargin">
-    <div layout="column" flex="30">
-      <div layout="column"><span>Total Rides</span></div>
-      <div layout="column" class="divLessMargin"><span>{{profile.totalRides}}</span></div>
+<md-toolbar style="background-color: whitesmoke !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon  style=" fill:black"  icon="menu"></ng-md-icon>
     </div>
+    <h3>
+      My Profile
+    </h3>
+    <span flex></span>
+    <span>
+      <md-button ng-click="updateProfile()" class="transparent" style="color: green">Save</md-button>
+  </div>
+</md-toolbar>
+<md-content layout="column" flex>
+  <div layout="column" flex ng-cloak>
+    <div ng-hide="true">
+      <div layout="row" layout-align="center" class="divMargin">
+        <img style="height:100px;" ng-src="/images/default_male.png">
+      </div>
 
-    <div layout="column" flex="30">
-      <div layout="column"><span>As Rider</span></div>
-      <div layout="column" class="divLessMargin"><span>0</span></div>
+      <div layout="row" layout-align="center" class="divMargin">
+        <span>{{profile.name}}</span>
+      </div>
+
+      <div layout="row" layout-align="center" class="divLessMargin" ng-if="profile.designation">
+        <ng-md-icon icon="dashboard"></ng-md-icon>
+        <span>{{profile.designation}}</span>
+      </div>
+
+      <div layout="row" layout-align="center" class="divLessMargin" ng-if="profile.email">
+        <span>{{profile.email}}</span>
+      </div>
+
+      <div layout="row" layout-align="center" class="divLessMargin">
+        <span>verify now</span>
+      </div>
+
+      <div layout="row" class="divMargin" style="border:1px lightgrey dotted;">
+
+      </div>
+
+      <div layout="row" layout-align="center" class="divMargin">
+        <div layout="column" flex="30">
+          <div layout="column"><span>Total Rides</span></div>
+          <div layout="column" class="divLessMargin"><span>{{profile.totalRides}}</span></div>
+        </div>
+
+        <div layout="column" flex="30">
+          <div layout="column"><span>As Rider</span></div>
+          <div layout="column" class="divLessMargin"><span>0</span></div>
+        </div>
+
+        <div layout="column" flex="30">
+          <div layout="column"><span>As Passenger</span></div>
+          <div layout="column" class="divLessMargin"><span>0</span></div>
+        </div>
+      </div>
     </div>
+    <div ng-show="true">
+      <form name="ProfileForm">
+        <div layout="row" layout-align="center" class="divMargin">
+          <img style="height:100px;" ng-src="{{profile.imageURI}}">
 
-    <div layout="column" flex="30">
-      <div layout="column"><span>As Passenger</span></div>
-      <div layout="column" class="divLessMargin"><span>0</span></div>
+          <div class="circletag">
+            <img ng-src="/images/icon_editProfile.png" class="editimg">
+          </div>
+        </div>
+        <div layout="column">
+          <md-input-container class="md-block">
+            <label>Name</label>
+            <input type="text" name="name" ng-model="profile.userName" required>
+
+            <div ng-messages="ProfileForm.name.$error" ng-if="ProfileForm.$submitted">
+              <div ng-message="required">Name required</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-input-container class="md-block" flex>
+            <label>Designation</label>
+            <input type="text" name="designation" ng-model="profile.profession">
+          </md-input-container>
+          <md-input-container class="md-block" flex>
+            <label>Company Name</label>
+            <input type="text" name="company" ng-model="profile.companyname">
+          </md-input-container>
+        </div>
+        <div layout="column">
+          <md-input-container class="md-block">
+            <label>Email</label>
+            <!--<md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>-->
+            <input ng-model="profile.officeemail" name="email" type="email" ng-required="true">
+
+            <div ng-messages="ProfileForm.email.$error" ng-if="ProfileForm.$submitted">
+              <div ng-message="required">Email required</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div>
+          <md-switch ng-model="profile.confirmtype" class="md-primary">
+            Auto Confirm for ride matches
+          </md-switch>
+        </div>
+        <div layout="column">
+          <md-input-container class="md-block">
+            <label>About Me</label>
+            <textarea ng-model="profile.aboutme" name="about" columns="1" md-maxlength="150" rows="3"></textarea>
+          </md-input-container>
+        </div>
+        <div layout="column">
+          <a href="#">Ride Preferences</a>
+        </div>
+        <div layout="row">
+          <md-input-container class="md-block" flex>
+            <label>Vehicle Number</label>
+            <input type="text" name="number" ng-model="vehicle.regno">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex>
+            <label>Vehicle Model</label>
+            <md-select ng-model="vehicle.model" name="model">
+              <md-option value="Hatch Back">Hatch Back</md-option>
+              <md-option value="Sedan">Sedan</md-option>
+              <md-option value="SUV">SUV</md-option>
+              <md-option value="Premium">Premium</md-option>
+              <md-option value="Bike">Bike</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-input-container class="md-block" flex>
+            <label>Fare (Points/KM)</label>
+            <input type="text" name="fare" ng-model="vehicle.fare">
+          </md-input-container>
+          <md-input-container class="md-block" flex>
+            <label>Offered Seats</label>
+            <input type="text" name="capacity" ng-model="vehicle.capacity">
+          </md-input-container>
+        </div>
+        <div layout="row" layout-align="center" class="divMargin">
+          <img style="height:150px;" ng-src="{{vehicle.imageURI}}">
+
+          <div class="circletag" style="left: -40px;">
+            <img ng-src="/images/icon_editProfile.png" class="editimg" style="margin-top:133%;">
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div>
-
+</md-content>

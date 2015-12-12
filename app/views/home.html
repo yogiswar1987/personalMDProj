@@ -3,28 +3,19 @@
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">Sidenav Left</h1>
       </md-toolbar>
-      <md-content layout-padding>
-        <md-button ng-click="close()" class="md-primary" hide-gt-md>
-          Close Sidenav Left
-        </md-button>
-        <p hide-md show-gt-md>
-          This sidenav is locked open on your device. To go back to the default behavior,
-          narrow your display.
-        </p>
-      </md-content>
+      <md-menu-content style="max-height: 100%">
+        <md-menu-item><md-button ui-sref="app.profile">Profile</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">New Ride</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">My Rides</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">My Rewards</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">Share & Earn</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">Feedback</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">Password</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="doSomething()">Logout</md-button></md-menu-item>
+
+
+      </md-menu-content>
     </md-sidenav>
-    <md-content layout="column" flex>
-      <md-toolbar>
-        <div class="md-toolbar-tools" style="padding: 0px;">
-          <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
-            <ng-md-icon icon="menu"></ng-md-icon>
-          </div>
-          <h3>
-            Quick Ride
-          </h3>
-          <span flex></span>
-        </div>
-      </md-toolbar>
+
       <div ui-view layout="column" flex></div>
-    </md-content>
 </div>

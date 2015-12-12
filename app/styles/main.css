@@ -119,3 +119,19 @@ md-sidenav ng-md-icon {
   margin-left:2%;
   marin-right:2%;
 }
+.circletag {
+  left: -22px;
+  display: block;
+  width: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.circletag img{
+  margin-top: 100%;
+  left:10%;
+  background: #E6E7ED;
+  width: 25px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}

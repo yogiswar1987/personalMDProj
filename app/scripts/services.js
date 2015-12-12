@@ -105,13 +105,6 @@ angular.module('quickRideApp')
           data: {phone:phone}
         };
         return $http(urlOpts);
-      },
-      getProfileDetails: function (phone){
-        var urlOpts = {
-          method: 'GET',
-          url: BASE_URL + 'QRUser/completeProfile?userId=' + phone
-        };
-        return $http(urlOpts);
       }
     }
   }]).factory('RideManagementService', ['$http', function ($http) {
@@ -163,6 +156,45 @@ angular.module('quickRideApp')
         var urlOpts = {
           method: 'GET',
           url: BASE_URL + 'QRVehicle?ownerid=' + userId
+        };
+        return $http(urlOpts);
+      },
+      getProfileDetails: function (phone) {
+        var urlOpts = {
+          method: 'GET',
+          url: BASE_URL + 'QRUser/completeProfile?userId=' + phone
+        };
+        return $http(urlOpts);
+      },
+      updateProfileDetail:function(profile){
+        var urlOpts = {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          url: BASE_URL + 'QRUserProfile/update',
+          transformRequest: function (obj) {
+            var str = [];
+            for (var p in obj)
+            if(obj[p] !== undefined)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+          data: profile
+        };
+        return $http(urlOpts);
+      },
+      updateVehicleDetail:function(vehicle){
+        var urlOpts = {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          url: BASE_URL + 'QRVehicle/update',
+          transformRequest: function (obj) {
+            var str = [];
+            for (var p in obj)
+              if(obj[p] !== undefined)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+          data: vehicle
         };
         return $http(urlOpts);
       }
