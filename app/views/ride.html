@@ -1,5 +1,18 @@
-<md-tabs md-stretch-tabs md-selected="selectedIndex" class="md-primary">
+<md-toolbar style="background-color: whitesmoke !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
+    </div>
+    <h3>
+      New Ride
+    </h3>
+    <span flex></span>
+  </div>
+</md-toolbar>
+<md-content layout="column" flex>
+  <md-tabs md-stretch-tabs md-selected="selectedIndex" class="md-primary">
   <md-tab label="Offer Ride" ui-sref="app.ride.offerRide"></md-tab>
   <md-tab label="Find Ride" ui-sref="app.ride.findRide"></md-tab>
 </md-tabs>
 <div ui-view flex></div>
+</md-content>
