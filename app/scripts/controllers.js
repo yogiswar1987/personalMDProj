@@ -279,6 +279,164 @@ angular.module('quickRideApp')
 
       }
     }
-  }]);
-;
+  }]).controller('NewRideCtrl', ['$scope', function ($scope) {
+    var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
+
+    var mapOptions = {
+      center: myLatlng,
+      zoom: 12,
+      disableDefaultUI: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    $scope.map = new google.maps.Map(document.getElementById("map"),
+      mapOptions);
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      var myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      $scope.map.setCenter(myLatLng);
+      $scope.map.setZoom(16);
+      var circle = new google.maps.Circle({
+        center: myLatLng,
+        radius: pos.coords.accuracy,
+        map: $scope.map,
+        fillColor: '#ABD8E6',
+        fillOpacity: 0.5,
+        strokeColor: '#ABD8E6',
+        strokeOpacity: 1.0
+      });
+      var circle1 = new google.maps.Circle({
+        center: myLatLng,
+        radius: 1,
+        map: $scope.map,
+        fillColor: '#00BDFE',
+        fillOpacity: 1.0,
+        strokeColor: '#00BDFE',
+        strokeOpacity: 1.0
+      });
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        map: $scope.map,
+        title: 'Hello World!'
+      });
+
+      google.maps.event.addListener(marker, 'dragend', function () {
+        geocodePosition(marker.getPosition());
+      });
+    }, function (error) {
+      alert('Unable to get location: ' + error.message);
+    });
+    function geocodePosition(pos) {
+      geocoder = new google.maps.Geocoder();
+      geocoder.geocode
+      ({
+          latLng: pos
+        },
+        function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            console.log(results[0].formatted_address);
+          }
+          else {
+            console.log('Cannot determine address at this location.' + status);
+          }
+        }
+      );
+    }
+  }])
+  .controller('RideCtrl', ['$scope', function ($scope) {
+    /*   var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
+
+     var mapOptions = {
+     center: myLatlng,
+     zoom: 12,
+     disableDefaultUI: true,
+     mapTypeId: google.maps.MapTypeId.ROADMAP
+     };
+     $scope.map = new google.maps.Map(document.getElementById("map"),
+     mapOptions);
+     navigator.geolocation.getCurrentPosition(function (pos) {
+     var myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+     $scope.map.setCenter(myLatLng);
+     $scope.map.setZoom(16);
+     var circle = new google.maps.Circle({
+     center: myLatLng,
+     radius: pos.coords.accuracy,
+     map: $scope.map,
+     fillColor: '#ABD8E6',
+     fillOpacity: 0.5,
+     strokeColor: '#ABD8E6',
+     strokeOpacity: 1.0
+     });
+     var circle1 = new google.maps.Circle({
+     center: myLatLng,
+     radius: 1,
+     map: $scope.map,
+     fillColor: '#00BDFE',
+     fillOpacity: 1.0,
+     strokeColor: '#00BDFE',
+     strokeOpacity: 1.0
+     });
+     var marker = new google.maps.Marker({
+     position: myLatLng,
+     draggable: true,
+     animation: google.maps.Animation.DROP,
+     map: $scope.map,
+     title: 'Hello World!'
+     });
+
+     google.maps.event.addListener(marker, 'dragend', function () {
+     geocodePosition(marker.getPosition());
+     });
+     }, function (error) {
+     alert('Unable to get location: ' + error.message);
+     });
+     function geocodePosition(pos) {
+     geocoder = new google.maps.Geocoder();
+     geocoder.geocode
+     ({
+     latLng: pos
+     },
+     function (results, status) {
+     if (status == google.maps.GeocoderStatus.OK) {
+     console.log(results[0].formatted_address);
+     }
+     else {
+     console.log('Cannot determine address at this location.' + status);
+     }
+     }
+     );
+     }*/
+  }]).controller('OfferRideCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', 'ProfileService', function ($scope, rideManagementService, authenticationService, profileService) {
+  profileService.getVehicle(authenticationService.getPhone()).success(function (data) {
+    $scope.vehicle = data.resultData;
+  }).error(function(data){
+    console.log(data);
+  });
+  $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
+  google.maps.event.addListener($scope.from, 'place_changed', function () {
+    var place = $scope.from.getPlace();
+    place.formatted_address;
+    place.geometry.location.lat();
+    place.geometry.location.lng();
+  });
+  $scope.to = new google.maps.places.Autocomplete(document.getElementById('to'));
+  google.maps.event.addListener($scope.to, 'place_changed', function () {
+    var place = $scope.to.getPlace();
+    place.formatted_address;
+    place.geometry.location.lat();
+    place.geometry.location.lng();
+  });
+
+  $scope.offerRide = function () {
+    if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
+      rideManagementService.createRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), $scope.vehicle.fare, $scope.vehicle.capacity, $scope.vehicle.model, new Date()).success(function (data) {
+        console.log(data);
+      }).error(function (data) {
+        console.log(data);
+      });
+    }
+  };
+}]).controller('FindRideCtrl', ['$scope', function ($scope) {
+}]);
+
 

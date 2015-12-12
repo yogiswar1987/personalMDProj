@@ -12,7 +12,7 @@
     <form name="activateAccountForm" novalidate layout="column" class="divMargin" ng-submit="activateAccount(accountActivationForm)">
       <md-input-container>
         <label>Activation code</label>
-        <input ng-model="code" name="code" required/>
+        <input ng-model="activationData.activationCode" name="code" required/>
 
         <div ng-messages="activateAccountForm.code.$error"
              ng-show="activateAccountForm.code.$touched">
@@ -21,7 +21,7 @@
       </md-input-container>
 
       <div layout="row" layout-align="center" class="divMargin">
-        <md-button flex="100" ng-click="activate()" class="md-raised md-primary">
+        <md-button flex="100" ng-click="activateAccount(activateAccountForm)" class="md-raised md-primary">
           Activate
         </md-button>
         </div>

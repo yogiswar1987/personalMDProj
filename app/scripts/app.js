@@ -83,26 +83,37 @@ angular.module('quickRideApp', [
       })
       .state('app.playlists', {
         url: '/playlists',
-        views: {
-          'menuContent': {
-            templateUrl: 'views/playlists.html',
-            controller: 'PlaylistsCtrl'
-          }
-        }
+        templateUrl: 'views/playlists.html',
+        controller: 'PlaylistsCtrl'
       })
       .state('app.changePassword', {
         url: '/changePassword',
         templateUrl: 'views/changePassword.html',
         controller: 'ChangePasswordCtrl'
+      }).state('app.newRide', {
+        url: '/newRide',
+        templateUrl: 'views/newRide.html',
+        controller: 'NewRideCtrl'
+      })
+      .state('app.ride', {
+        url: '/ride',
+        templateUrl: 'views/ride.html',
+        controller: 'RideCtrl'
+      })
+      .state('app.ride.offerRide', {
+        url: '/offerRide',
+        templateUrl: 'views/offerRide.html',
+        controller: 'OfferRideCtrl'
+      })
+      .state('app.ride.findRide', {
+        url: '/findRide',
+        templateUrl: 'views/findRide.html',
+        controller: 'FindRideCtrl'
       })
       .state('app.single', {
         url: '/playlists/:playlistId',
-        views: {
-          'menuContent': {
-            templateUrl: 'views/playlist.html',
-            controller: 'PlaylistCtrl'
-          }
-        }
+        templateUrl: 'views/playlist.html',
+        controller: 'PlaylistCtrl'
       });
   })
 
