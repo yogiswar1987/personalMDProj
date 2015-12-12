@@ -337,12 +337,18 @@ angular.module('quickRideApp')
         strokeColor: '#00BDFE',
         strokeOpacity: 1.0
       });
+      var icon = {
+        url: "/images/icon_marker.png", // url
+        scaledSize: new google.maps.Size(50, 50), // scaled size
+        origin: new google.maps.Point(0, 0), // origin
+        anchor: new google.maps.Point(25, 45) // anchor
+      };
       var marker = new google.maps.Marker({
         position: myLatLng,
         draggable: true,
+        icon: icon,
         animation: google.maps.Animation.DROP,
         map: $scope.map,
-        title: 'Hello World!'
       });
 
       google.maps.event.addListener(marker, 'dragend', function () {

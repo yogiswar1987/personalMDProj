@@ -1,15 +1,16 @@
 <div layout="column" flex ng-cloak>
   <md-content layout-padding
-    <div class="quickRideImgStyle">
-      <img src="/images/quickride.png" style="height:80px;">
-    </div>
+  <div class="quickRideImgStyle">
+    <img src="/images/quickride.png" style="height:80px;">
+  </div>
   <div layout="column" layout-align="center" style="margin-left: 5%;margin-right: 5%">
     <div layout="column" layout-align="center" class="divMargin">
       <span layout="row">Thank you for registering with Quick Ride!</span>
       <span layout="row" class="divLessMargin">We sent activation code through SMS </span>
     </div>
 
-    <form name="activateAccountForm" novalidate layout="column" class="divMargin" ng-submit="activateAccount(accountActivationForm)">
+    <form name="activateAccountForm" novalidate layout="column" class="divMargin"
+          ng-submit="activateAccount(accountActivationForm)">
       <md-input-container>
         <label>Activation code</label>
         <input ng-model="activationData.activationCode" name="code" required/>
@@ -24,19 +25,15 @@
         <md-button flex="100" ng-click="activateAccount(activateAccountForm)" class="md-raised md-primary">
           Activate
         </md-button>
-        </div>
-      </form>
-
-      <div layout="row" class="divMargin">
-          <a href="#" ng-click="resendActivationCode()">Resend activation code</a>
       </div>
+    </form>
+
+    <div layout="row" class="divMargin">
+      <a href="#" ng-click="resendActivationCode()">Resend activation code</a>
+    </div>
   </div>
   </md-content>
 </div>
-
-
-
-
 
 
 <!--

@@ -2,13 +2,13 @@
 
 
 angular.module('quickRideApp', [
-  'ui.router',
-  'ngMaterial',
-  'ngMdIcons',
-  'ngMessages',
-  'angular-carousel',
-  'ngOpenFB'
-])
+    'ui.router',
+    'ngMaterial',
+    'ngMdIcons',
+    'ngMessages',
+    'angular-carousel',
+    'ngOpenFB'
+  ])
   .run(function ($openFB) {
     $openFB.init({appId: '1524191344558710'});
   })
@@ -22,7 +22,7 @@ angular.module('quickRideApp', [
     $urlRouterProvider.otherwise('/landing');
     $stateProvider
 
-      //Authentication Pages
+    //Authentication Pages
       .state('auth', {
         abstract: true,
         url: "/auth",

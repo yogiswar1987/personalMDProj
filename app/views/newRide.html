@@ -1,12 +1,24 @@
-<md-content layout-padding flex layout="column">
-    <div id="map" flex></div>
-
-    <div layout="row" layout-align="center" style="position: fixed;bottom: 25px;width: 100%">
-      <div layout="column" flex="40">
-        <md-button class="md-raised md-primary" ui-sref="app.ride.offerRide" href="#/auth/signUp">Ride Now</md-button></a>
-      </div>
-      <div layout="column" flex="40">
-        <md-button class="md-raised md-primary" href="#/auth/login">Ride Later</md-button>
-      </div>
+<md-toolbar style="background-color: whitesmoke !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
     </div>
+    <h3>
+      New Ride
+    </h3>
+    <span flex></span>
+  </div>
+</md-toolbar>
+<md-content layout="column" flex>
+  <div id="map" flex></div>
+
+  <div layout="row" layout-align="center" style="position: fixed;bottom: 25px;width: 100%" class="layout-align-space-between-center">
+    <div layout="column" flex="40">
+      <md-button class="md-raised md-primary" ui-sref="app.ride.offerRide" href="#/auth/signUp">Ride Now</md-button>
+      </a>
+    </div>
+    <div layout="column" flex="40">
+      <md-button class="md-raised md-primary" href="#/auth/login">Ride Later</md-button>
+    </div>
+  </div>
 </md-content>
