@@ -1,15 +1,15 @@
-<md-toolbar style="background-color: whitesmoke !important;">
-  <div class="md-toolbar-tools" style="padding: 0px;">
+<md-toolbar style="background-color: whitesmoke !important;min-height: 50px !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;height: 50px">
     <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
       <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
     </div>
     <h3>
-      New Ride
+      Find Ride
     </h3>
     <span flex></span>
   </div>
 </md-toolbar>
-<md-content layout="column" flex>
+<md-content layout="column">
   <md-tabs md-stretch-tabs md-selected="selectedIndex" class="md-primary">
   <md-tab label="Offer Ride" ui-sref="app.ride.offerRide"></md-tab>
   <md-tab label="Find Ride" ui-sref="app.ride.findRide"></md-tab>

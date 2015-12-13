@@ -1,6 +1,18 @@
-<ion-view>
-  <ion-content>
 
-    <div>find ride</div>
-  </ion-content>
-</ion-view>
+<div layout="row">
+  <div layout="column" flex class="md-padding">
+    <div flex layout="row">
+      <img ng-src="/images/icon_from.png" style="height: 15px;left: 1%;position: relative">
+      <input type="text" id="from" placeholder="Enter ride start address" flex style="margin: 0px 10px;">
+    </div>
+    <div flex layout="row">
+      <img ng-src="/images/icon_to.png" style="height: 10px;left: 1%;bottom: -10px;position: relative">
+      <input id="to" type="text" placeholder="Enter ride end address" flex style="margin: 0px 10px 0px 15px;">
+    </div>
+  </div>
+  <img src="/images/icon_swap.png" style="height: 25px;width: 20px;margin: auto;">
+</div>
+
+<div layout="row" layout-align="center">
+  <md-button flex="90" class="md-raised md-primary" ng-click="requestRide()">Request Ride</md-button>
+</div>

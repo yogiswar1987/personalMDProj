@@ -109,7 +109,7 @@ angular.module('quickRideApp')
   }
 }]).factory('RideManagementService', ['$http', function ($http) {
   return {
-    createRide: function (userId, startAddress, startLatitude, startLongitude, endAddress, endLatitude, endLongitude, farePerKm, availableSeats, vehicleModel, startTime, route) {
+    offerRide: function (userId, startAddress, startLatitude, startLongitude, endAddress, endLatitude, endLongitude, farePerKm, availableSeats, vehicleModel, startTime, route) {
 
       var month = '' + (startTime.getMonth() + 1);
       var day = '' + startTime.getDate();
@@ -148,6 +148,79 @@ angular.module('quickRideApp')
       };
       return $http(urlOpts);
 
+    },
+    requestRide: function (userId, startAddress, startLatitude, startLongitude, endAddress, endLatitude, endLongitude, startTime, route) {
+
+      var month = '' + (startTime.getMonth() + 1);
+      var day = '' + startTime.getDate();
+      var year = '' + startTime.getFullYear();
+      var hour = '' + startTime.getHours();
+      var minutes = '' + startTime.getMinutes();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      if (hour.length < 2) hour = '0' + hour;
+      if (minutes.length < 2) minutes = '0' + minutes;
+
+      var requestData = {
+        startAddress: startAddress,
+        startLatitude: startLatitude,
+        userId: userId,
+        endLongitude: endLongitude,
+        startLongitude: startLongitude,
+        startTime: day + month + year + hour + minutes,
+        endLatitude: endLatitude,
+        endAddress: endAddress,
+        noOfSeats:1
+      };
+      var urlOpts = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        url: BASE_URL + 'QRPassengerRide',
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj)
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          return str.join("&");
+        },
+        data: requestData
+      };
+      return $http(urlOpts);
+
+    },
+    getPassengerRides:function(userId,startLatitude,startLongitude,startTime){
+      var month = '' + (startTime.getMonth() + 1);
+      var day = '' + startTime.getDate();
+      var year = '' + startTime.getFullYear();
+      var hour = '' + startTime.getHours();
+      var minutes = '' + startTime.getMinutes();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      if (hour.length < 2) hour = '0' + hour;
+      if (minutes.length < 2) minutes = '0' + minutes;
+      var urlOpts = {
+        method: 'GET',
+        url: BASE_URL + 'QRRidematcher/passengers/location?startLongitude='+startLongitude+'&startTime='+day + month + year + hour + minutes+'&startLatitude='+startLatitude+'&id=0&userId=8095054296'
+      };
+      return $http(urlOpts);
+    },
+    getRiderRides:function(userId,startLatitude,startLongitude,startTime){
+      var month = '' + (startTime.getMonth() + 1);
+      var day = '' + startTime.getDate();
+      var year = '' + startTime.getFullYear();
+      var hour = '' + startTime.getHours();
+      var minutes = '' + startTime.getMinutes();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      if (hour.length < 2) hour = '0' + hour;
+      if (minutes.length < 2) minutes = '0' + minutes;
+      var urlOpts = {
+        method: 'GET',
+        url: BASE_URL + 'QRRidematcher/rides/location?startLongitude='+startLongitude+'&startTime='+day + month + year + hour + minutes+'&startLatitude='+startLatitude+'&id=0&userId=8095054296'
+      };
+      return $http(urlOpts);
     }
   }
 }]).factory('ProfileService', ['$http', function ($http) {
