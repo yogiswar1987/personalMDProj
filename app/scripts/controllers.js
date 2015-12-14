@@ -183,6 +183,7 @@ angular.module('quickRideApp')
             preserveScope: true,
             templateUrl: 'views/loginError.html',
             controller: function DialogController($scope, $mdDialog) {
+              $scope.errorMessage = error.resultData.userMsg;
               $scope.closeDialog = function () {
                 $mdDialog.hide();
               }
