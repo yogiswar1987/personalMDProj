@@ -103,7 +103,7 @@ angular.module('quickRideApp')
 
 
   if (authenticationService.isSessionValid()) {
-    $location.url('app/browse');
+    $location.url('app/newRide');
   }
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -206,6 +206,40 @@ angular.module('quickRideApp')
     }).error(function (error) {
       console.log(error);
     });
+    $scope.UploadProfileImage = function (files) {
+      var file = files[0];
+      var fr = new FileReader();
+      console.log('hello world');
+      fr.readAsDataURL(file);
+
+      fr.onload = (function (theFile) {
+        return function (e) {
+          console.log(e.target.result);
+          profileService.uploadImage(e.target.result.split('base64,')[1]).success(function (data) {
+            $scope.profile.imageURI = data;
+          }).error(function (data) {
+            console.log(data);
+          });
+        };
+      })(file);
+    };
+    $scope.UploadVehicleImage = function (files) {
+      var file = files[0];
+      var fr = new FileReader();
+      console.log('hello world');
+      fr.readAsDataURL(file);
+
+      fr.onload = (function (theFile) {
+        return function (e) {
+          console.log(e.target.result);
+          profileService.uploadImage(e.target.result.split('base64,')[1]).success(function (data) {
+            $scope.profile.imageURI = data;
+          }).error(function (data) {
+            console.log(data);
+          });
+        };
+      })(file);
+    };
     $scope.updateProfile = function () {
       var updateProfilePromise = profileService.updateProfileDetail($scope.profile);
       var updateVehiclePromise = profileService.updateVehicleDetail($scope.vehicle);
@@ -304,7 +338,7 @@ angular.module('quickRideApp')
 
     }
   }
-}]).controller('NewRideCtrl', ['$scope', function ($scope) {
+}]).controller('NewRideCtrl', ['$scope','$timeout', function ($scope,$timeout) {
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
     var mapOptions = {
@@ -346,9 +380,9 @@ angular.module('quickRideApp')
       var marker = new google.maps.Marker({
         position: myLatLng,
         draggable: true,
-        icon: icon,
         animation: google.maps.Animation.DROP,
         map: $scope.map,
+        icon:icon
       });
 
       google.maps.event.addListener(marker, 'dragend', function () {
@@ -373,6 +407,9 @@ angular.module('quickRideApp')
         }
       );
     }
+  $timeout(function(){
+    google.maps.event.trigger($scope.map, 'resize');
+  })
   }])
   .controller('RideCtrl', ['$scope', function ($scope) {
     /*   var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
@@ -443,8 +480,72 @@ angular.module('quickRideApp')
   }).error(function (data) {
     console.log(data);
   });
+  $scope.$parent.selectedIndex = -1;
+  $scope.selectedIndex = -1;
+  $scope.flip = function ($index) {
+    if ($index !== $scope.selectedIndex) {
+      $scope.$parent.selectedIndex = $index;
+      $scope.selectedIndex = $index;
+    }
+    else {
+      $scope.selectedIndex = -1;
+      $scope.$parent.selectedIndex = -1;
+    }
+  };
   $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
-  $scope.riderRides = [{"userid":9739001010,"rideid":131,"name":"qwer","userRole":"Passenger","gender":"M","rating":0.0,"startDate":1449976680000,"fromLocationAddress":"Marathahalli, Bengaluru, Karnataka, India","fromLocationLatitude":12.9591722,"fromLocationLongitude":77.69741899999997,"toLocationAddress":"Majestic, Bengaluru, Karnataka, India","toLocationLatitude":12.9766637,"toLocationLongitude":77.57125559999997,"pickupLocationLatitude":12.95879,"pickupLocationLongitude":77.69748,"pickupTime":1449979260000,"dropLocationLatitude":12.9766637,"dropLocationLongitude":77.57125559999997,"dropTime":1449982860000,"distance":15.418,"points":77,"matchPercentage":100,"noOfReviews":0,"verificationStatus":false,"requiredSeats":1},{"userid":9739001010,"rideid":131,"name":"qwer","userRole":"Passenger","gender":"M","rating":0.0,"startDate":1449976680000,"fromLocationAddress":"Marathahalli, Bengaluru, Karnataka, India","fromLocationLatitude":12.9591722,"fromLocationLongitude":77.69741899999997,"toLocationAddress":"Majestic, Bengaluru, Karnataka, India","toLocationLatitude":12.9766637,"toLocationLongitude":77.57125559999997,"pickupLocationLatitude":12.95879,"pickupLocationLongitude":77.69748,"pickupTime":1449979260000,"dropLocationLatitude":12.9766637,"dropLocationLongitude":77.57125559999997,"dropTime":1449982860000,"distance":15.418,"points":77,"matchPercentage":100,"noOfReviews":0,"verificationStatus":false,"requiredSeats":1}];
+  $scope.riderRides = [{
+    "userid": 9739001010,
+    "rideid": 131,
+    "name": "qwer",
+    "userRole": "Passenger",
+    "gender": "M",
+    "rating": 0.0,
+    "startDate": 1449976680000,
+    "fromLocationAddress": "Marathahalli, Bengaluru, Karnataka, India",
+    "fromLocationLatitude": 12.9591722,
+    "fromLocationLongitude": 77.69741899999997,
+    "toLocationAddress": "Majestic, Bengaluru, Karnataka, India",
+    "toLocationLatitude": 12.9766637,
+    "toLocationLongitude": 77.57125559999997,
+    "pickupLocationLatitude": 12.95879,
+    "pickupLocationLongitude": 77.69748,
+    "pickupTime": 1449979260000,
+    "dropLocationLatitude": 12.9766637,
+    "dropLocationLongitude": 77.57125559999997,
+    "dropTime": 1449982860000,
+    "distance": 15.418,
+    "points": 77,
+    "matchPercentage": 100,
+    "noOfReviews": 0,
+    "verificationStatus": false,
+    "requiredSeats": 1
+  }, {
+    "userid": 9739001010,
+    "rideid": 131,
+    "name": "qwer",
+    "userRole": "Passenger",
+    "gender": "M",
+    "rating": 0.0,
+    "startDate": 1449976680000,
+    "fromLocationAddress": "Marathahalli, Bengaluru, Karnataka, India",
+    "fromLocationLatitude": 12.9591722,
+    "fromLocationLongitude": 77.69741899999997,
+    "toLocationAddress": "Majestic, Bengaluru, Karnataka, India",
+    "toLocationLatitude": 12.9766637,
+    "toLocationLongitude": 77.57125559999997,
+    "pickupLocationLatitude": 12.95879,
+    "pickupLocationLongitude": 77.69748,
+    "pickupTime": 1449979260000,
+    "dropLocationLatitude": 12.9766637,
+    "dropLocationLongitude": 77.57125559999997,
+    "dropTime": 1449982860000,
+    "distance": 15.418,
+    "points": 77,
+    "matchPercentage": 100,
+    "noOfReviews": 0,
+    "verificationStatus": false,
+    "requiredSeats": 1
+  }];
   google.maps.event.addListener($scope.from, 'place_changed', function () {
     var place = $scope.from.getPlace();
     place.formatted_address;

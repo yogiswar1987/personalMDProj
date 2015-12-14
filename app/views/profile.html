@@ -61,7 +61,11 @@
           <img style="height:100px;" ng-src="{{profile.imageURI}}">
 
           <div class="circletag">
-            <img ng-src="/images/icon_editProfile.png" class="editimg">
+            <label for="profile-image" md-ink-ripple >
+              <img ng-src="/images/icon_editProfile.png" class="editimg" >
+            </label>
+            <input type="file" id="profile-image" name="file" style="display: none;"
+                   onchange="angular.element(this).scope().UploadProfileImage(this.files)" />
           </div>
         </div>
         <div layout="column">
@@ -139,8 +143,12 @@
         <div layout="row" layout-align="center" class="divMargin">
           <img style="height:150px;" ng-src="{{vehicle.imageURI}}">
 
-          <div class="circletag" style="left: -40px;">
-            <img ng-src="/images/icon_editProfile.png" class="editimg" style="margin-top:133%;">
+          <div class="circletag" style="margin-top: 12%;left: -35px;">
+            <label for="vehicle-image" md-ink-ripple class="md-shadow-animated">
+              <img ng-src="/images/icon_editProfile.png" class="editimg" style="">
+            </label>
+            <input type="file" id="vehicle-image" name="file" style="display: none;"
+                   onchange="angular.element(this).scope().UploadVehicleImage(this.files)" />
           </div>
         </div>
       </form>
