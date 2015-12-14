@@ -69,6 +69,23 @@ angular.module('quickRideApp')
           console.log(data);
         }).error(function (error) {
           console.log(error);
+          $mdDialog.show({
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            templateUrl: 'views/signUpError.html',
+            controller: function DialogController($scope, $mdDialog) {
+              $scope.errorMessage = error.resultData.userMsg;
+              $scope.closeDialog = function () {
+                $mdDialog.hide();
+              }
+
+              $scope.goToLogin = function(){
+                $mdDialog.hide();
+                $location.path('auth/login');
+              }
+            }
+          });
         });
       }
     }

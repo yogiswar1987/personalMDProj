@@ -17,10 +17,11 @@
       </md-input-container>
       <md-input-container class="md-block">
         <label><img src="/images/icon_password.png" style="height: 11px">Password</label>
-        <input type="password" name="password" ng-model="signUpData.pwd" required>
+        <input type="password" name="password" ng-model="signUpData.pwd" ng-minlength="4" required>
 
         <div class="input-error" ng-messages="signUpForm.password.$error" ng-if="signUpForm.$submitted">
           <div ng-message="required">Password required</div>
+          <div ng-message="minlength">Password should have minimum of 4 characters</div>
         </div>
       </md-input-container>
       <md-input-container class="md-block">

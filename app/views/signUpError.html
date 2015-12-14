@@ -1,0 +1,17 @@
+<md-dialog aria-label="Login error" flex="70">
+  <md-dialog-content class="divMargin" style="margin-left: 4%">
+    <div layout="column" layout-align="center">
+      <span layout="row" layout-align="center">{{errorMessage}}</span>
+    </div>
+
+    <md-whiteframe class="md-whiteframe-z5" layout layout-align="center center" class="divMargin">
+      <md-button ng-click="goToLogin()" class="md-clear" flex="45">
+        Login
+      </md-button>
+
+      <md-button ng-click="closeDialog()" class="md-clear" flex="45">
+        Skip
+      </md-button>
+    </md-whiteframe>
+  </md-dialog-content>
+</md-dialog>
