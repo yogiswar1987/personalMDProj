@@ -625,6 +625,13 @@ angular.module('quickRideApp')
     }
   };
 }]).controller('MyRidesCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', 'ProfileService', function ($scope, rideManagementService, authenticationService, profileService) {
+
+  $scope.getUpcoming = function (item) {
+    return item.status === 'Delayed' || item.status === 'Started' || item.status === 'Scheduled';
+  };
+  $scope.getCompleted = function (item) {
+    return item.status === 'Completed' || item.status === 'Cancelled';
+  };
   rideManagementService.getAllRides(authenticationService.getPhone()).success(function (data) {
     console.log(data);
     $scope.myRides= data.resultData;
