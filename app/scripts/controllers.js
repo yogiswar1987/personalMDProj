@@ -80,7 +80,7 @@ angular.module('quickRideApp')
                 $mdDialog.hide();
               }
 
-              $scope.goToLogin = function(){
+              $scope.goToLogin = function () {
                 $mdDialog.hide();
                 $location.path('auth/login');
               }
@@ -201,12 +201,12 @@ angular.module('quickRideApp')
       var response = data.resultData;
       $scope.profile.id = response.userProfile.id;
       $scope.profile.confirmtype = response.userProfile.confirmtype;
-      $scope.profile.userName = response.userProfile.userName;
+      $scope.profile.name = response.userProfile.userName;
       $scope.profile.companyname = response.userProfile.companyname;
       $scope.profile.profession = response.userProfile.profession;
       $scope.profile.aboutme = response.userProfile.aboutme;
       $scope.profile.imageURI = response.userProfile.imageURI ? response.userProfile.imageURI : '/images/default_male.png';
-      $scope.profile.officeemail = response.userProfile.officeemail;
+      $scope.profile.officeemail = response.userProfile.email;
       $scope.profile.facebook = response.userProfile.facebook;
       $scope.profile.twitter = response.userProfile.twitter;
       $scope.profile.linkedin = response.userProfile.linkedin;
@@ -234,7 +234,7 @@ angular.module('quickRideApp')
         return function (e) {
           console.log(e.target.result);
           profileService.uploadImage(e.target.result.split('base64,')[1]).success(function (data) {
-            $scope.profile.imageURI = data;
+            $scope.profile.imageURI = data.resultData;
           }).error(function (data) {
             console.log(data);
           });
@@ -251,7 +251,7 @@ angular.module('quickRideApp')
         return function (e) {
           console.log(e.target.result);
           profileService.uploadImage(e.target.result.split('base64,')[1]).success(function (data) {
-            $scope.profile.imageURI = data;
+            $scope.vehicle.imageURI = data.resultData;
           }).error(function (data) {
             console.log(data);
           });
@@ -356,7 +356,7 @@ angular.module('quickRideApp')
 
     }
   }
-}]).controller('NewRideCtrl', ['$scope','$timeout', function ($scope,$timeout) {
+}]).controller('NewRideCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
     var mapOptions = {
@@ -400,7 +400,7 @@ angular.module('quickRideApp')
         draggable: true,
         animation: google.maps.Animation.DROP,
         map: $scope.map,
-        icon:icon
+        icon: icon
       });
 
       google.maps.event.addListener(marker, 'dragend', function () {
@@ -425,9 +425,10 @@ angular.module('quickRideApp')
         }
       );
     }
-  $timeout(function(){
-    google.maps.event.trigger($scope.map, 'resize');
-  })
+
+    $timeout(function () {
+      google.maps.event.trigger($scope.map, 'resize');
+    })
   }])
   .controller('RideCtrl', ['$scope', function ($scope) {
     /*   var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
@@ -511,6 +512,7 @@ angular.module('quickRideApp')
     }
   };
   $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
+
   $scope.riderRides = [{
     "userid": 9739001010,
     "rideid": 131,
@@ -622,6 +624,13 @@ angular.module('quickRideApp')
       });
     }
   };
+}]).controller('MyRidesCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', 'ProfileService', function ($scope, rideManagementService, authenticationService, profileService) {
+  rideManagementService.getAllRides(authenticationService.getPhone()).success(function (data) {
+    console.log(data);
+    $scope.myRides= data.resultData;
+  }).error(function (data) {
+    console.log(data);
+  })
 }]);
 
 

@@ -110,6 +110,11 @@ angular.module('quickRideApp', [
         templateUrl: 'views/findRide.html',
         controller: 'FindRideCtrl'
       })
+      .state('app.myRides', {
+        url: '/myRides',
+        templateUrl: 'views/myRides.html',
+        controller: 'MyRidesCtrl'
+      })
       .state('app.single', {
         url: '/playlists/:playlistId',
         templateUrl: 'views/playlist.html',

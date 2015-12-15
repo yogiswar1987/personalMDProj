@@ -99,7 +99,7 @@ md-sidenav ng-md-icon {
 }
 
 .divMargin {
-  margin-top: 5%;
+  margin-top: 20px;
 }
 
 .divLessMargin {
@@ -122,7 +122,7 @@ md-sidenav ng-md-icon {
 }
 
 .circletag {
-  margin-top: 6%;
+  margin-top: 40px;
   left: -22px;
   display: block;
   width: 40px;
@@ -132,8 +132,6 @@ md-sidenav ng-md-icon {
 }
 
 .circletag img {
-  left: 10%;
-  margin-top: 20%;
   background: #E6E7ED;
   width: 25px;
   -moz-border-radius: 20px;

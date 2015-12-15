@@ -221,6 +221,13 @@ angular.module('quickRideApp')
         url: BASE_URL + 'QRRidematcher/rides/location?startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&id=0&userId=8095054296'
       };
       return $http(urlOpts);
+    },
+    getAllRides:function(userId){
+      var urlOpts = {
+        method: 'GET',
+        url: BASE_URL + 'QRRide/all?userId=' + userId
+      };
+      return $http(urlOpts);
     }
   }
 }]).factory('ProfileService', ['$http', function ($http) {

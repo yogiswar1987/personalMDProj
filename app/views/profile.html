@@ -58,7 +58,7 @@
     <div ng-show="true">
       <form name="ProfileForm">
         <div layout="row" layout-align="center" class="divMargin">
-          <img style="height:100px;" ng-src="{{profile.imageURI}}">
+          <img style="height:100px;width: 100px;border-radius: 50%;border: 1px solid #ddd;" ng-src="{{profile.imageURI}}">
 
           <div class="circletag">
             <label for="profile-image" md-ink-ripple >
@@ -71,7 +71,7 @@
         <div layout="column">
           <md-input-container class="md-block">
             <label>Name</label>
-            <input type="text" name="name" ng-model="profile.userName" required>
+            <input type="text" name="name" ng-model="profile.name" required>
 
             <div ng-messages="ProfileForm.name.$error" ng-if="ProfileForm.$submitted">
               <div ng-message="required">Name required</div>
@@ -143,7 +143,7 @@
         <div layout="row" layout-align="center" class="divMargin">
           <img style="height:150px;" ng-src="{{vehicle.imageURI}}">
 
-          <div class="circletag" style="margin-top: 9%;left: -35px;">
+          <div class="circletag" style="margin-top: 60px;left: -35px;">
             <label for="vehicle-image" md-ink-ripple class="md-shadow-animated">
               <img ng-src="/images/icon_editProfile.png" class="editimg" style="">
             </label>
