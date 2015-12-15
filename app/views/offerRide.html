@@ -14,18 +14,18 @@
 </div>
 <div style="padding-right: 20px;padding-left: 20px">
   <div ng-repeat="ride in riderRides" style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
-    <md-whiteframe layout="row" flex class=".md-whiteframe-4dp">
+    <div layout="row" flex>
       <div class="flip-container">
         <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
-          <div class="front">
+          <div class="front" md-ink-ripple>
             <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
           </div>
-          <div class="back" style="background-color: green">
+          <div class="back" style="background-color: green" md-ink-ripple>
             <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
           </div>
         </div>
       </div>
-      <div layout="column" flex>
+      <div layout="column" flex >
         <div flex layout="row">
           <div style="padding-left: 20px">{{ride.name}}</div>
           <div flex></div>
@@ -36,7 +36,7 @@
         <div style="padding-left: 20px">{{ride.fromLocationAddress}}</div>
         <div style="padding-left: 20px">{{ride.toLocationAddress}}</div>
       </div>
-    </md-whiteframe>
+    </div>
 
   </div>
 </div>
