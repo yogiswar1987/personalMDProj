@@ -1,28 +1,85 @@
-<div style="padding-right: 20px;padding-left: 20px">
-  <div ng-repeat="ride in myRides" style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
-    <div layout="row" flex>
-      <div class="flip-container">
-        <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
-          <div class="front" md-ink-ripple>
-            <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
+<md-toolbar style="background-color: whitesmoke !important;min-height: 50px !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;height: 50px">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
+    </div>
+    <h3>
+      My Rides
+    </h3>
+    <span flex></span>
+    <md-button ng-if="selectedTab == 0 && selectedIndex>=0" ng-click="updateProfile()" class="transparent"
+               style="color: green">Join
+    </md-button>
+    <md-button ng-if="selectedTab == 0 && selectedIndex<0" ng-click="updateProfile()" class="transparent"
+               style="color: green">Create ride
+    </md-button>
+  </div>
+</md-toolbar>
+<md-tabs md-stretch-tabs md-selected="selectedTab" class="md-primary" flex>
+  <md-tab label="Upcoming">
+    <div style="padding-right: 20px;padding-left: 20px">
+      <div ng-repeat="ride in myRides | filter:{status:'Delayed',status: 'Started' ,status: 'Scheduled'}"
+           style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
+        <div layout="row" flex>
+          <div class="flip-container">
+            <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
+              <div class="front" md-ink-ripple>
+                <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
+              </div>
+              <div class="back" style="background-color: green" md-ink-ripple>
+                <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
+              </div>
+            </div>
           </div>
-          <div class="back" style="background-color: green" md-ink-ripple>
-            <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
+          <div layout="column" flex>
+            <div flex layout="row">
+              <div style="padding-left: 20px">{{ride.userName}}</div>
+              <div flex></div>
+              <div style="padding-left: 20px" flex>Verified</div>
+              <div>Date time</div>
+            </div>
+            <div style="padding-left: 20px">*****</div>
+            <div style="padding-left: 20px">{{ride.startAddress}}</div>
+            <div style="padding-left: 20px">{{ride.endAddress}}</div>
           </div>
         </div>
-      </div>
-      <div layout="column" flex >
-        <div flex layout="row">
-          <div style="padding-left: 20px">{{ride.name}}</div>
-          <div flex></div>
-          <div style="padding-left: 20px" flex>Verified</div>
-          <div>Date time</div>
-        </div>
-        <div style="padding-left: 20px">*****</div>
-        <div style="padding-left: 20px">{{ride.fromLocationAddress}}</div>
-        <div style="padding-left: 20px">{{ride.toLocationAddress}}</div>
       </div>
     </div>
+  </md-tab>
+  <md-tab label="Completed">
+    <div style="padding-right: 20px;padding-left: 20px">
+      <div ng-repeat="ride in myRides | filter:{ status: 'Completed', status: 'Cancelled' }"
+           style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
+        <div layout="row" flex>
+          <div class="flip-container">
+            <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
+              <div class="front" md-ink-ripple>
+                <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
+              </div>
+              <div class="back" style="background-color: green" md-ink-ripple>
+                <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
+              </div>
+            </div>
+          </div>
+          <div layout="column" flex>
+            <div flex layout="row">
+              <div style="padding-left: 20px">{{ride.userName}}</div>
+              <div flex></div>
+              <div style="padding-left: 20px" flex>Verified</div>
+              <div>Date time</div>
+            </div>
+            <div style="padding-left: 20px">*****</div>
+            <div style="padding-left: 20px">{{ride.startAddress}}</div>
+            <div style="padding-left: 20px">{{ride.endAddress}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-tab>
+</md-tabs>
 
-  </div>
-</div>
+
+
+
+
+
