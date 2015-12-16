@@ -228,6 +228,20 @@ angular.module('quickRideApp')
         url: BASE_URL + 'QRRide/all?userId=' + userId
       };
       return $http(urlOpts);
+    },
+    cancelRiderRide:function(rideId,userId){
+      var urlOpts = {
+        method: 'DELETE',
+        url: BASE_URL + 'QRRiderRide/status?userId=' + userId +'&id='+rideId
+      };
+      return $http(urlOpts);
+    },
+    cancelPassengerRide:function(rideId,userId){
+      var urlOpts = {
+        method: 'DELETE',
+        url: BASE_URL + 'QRPassengerRide/status?userId=' + userId +'&id='+rideId
+      };
+      return $http(urlOpts);
     }
   }
 }]).factory('ProfileService', ['$http', function ($http) {

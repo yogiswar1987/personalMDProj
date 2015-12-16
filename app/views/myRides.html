@@ -33,14 +33,19 @@
           </div>
           <div layout="column" flex >
             <div flex layout="row" md-ink-ripple="#008000">
-              <div style="padding-left: 20px">{{ride.userName}}</div>
+              <div style="padding-left: 20px" >
+                <div style="padding-right: 10px" ng-repeat="name in ride.passengers">{{name}}</div>
+                <div ng-hide="ride.passengers.length > 0">
+                  No passengers
+                </div>
+              </div>
               <div flex></div>
-              <div style="padding-left: 20px" flex>Verified</div>
-              <div>Date time</div>
+              <div style="padding-left: 20px" flex>{{ride.status}}</div>
+              <div>{{ ride.startTime | date :'ddMMM hh:mm a'}}</div>
             </div>
             <div layout="row" flex="89">
               <div layout="column" flex md-ink-ripple="#008000">
-                <div style="padding-left: 20px">*****</div>
+                <div style="padding-left: 20px">&nbsp;</div>
                 <div style="padding-left: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ride.startAddress}}</div>
                 <div style="padding-left: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ride.endAddress}}</div>
               </div>
