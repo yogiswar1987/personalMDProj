@@ -641,6 +641,7 @@ angular.module('quickRideApp')
   };
   rideManagementService.getAllRides(authenticationService.getPhone()).success(function (data) {
     console.log(data);
+    console.log(data);
     $scope.myRides = data.resultData;
   }).error(function (data) {
     console.log(data);
