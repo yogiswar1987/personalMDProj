@@ -24,6 +24,7 @@ angular.module('quickRideApp')
       };
       $rootScope.showNavBar = false;
       $scope.logout = function () {
+        sessionStorage.clear();
         authenticationService.logout();
         $location.path('#/auth/landing');
       };
@@ -307,6 +308,7 @@ angular.module('quickRideApp')
           controller: function DialogController($scope, $mdDialog) {
             $scope.closeDialog = function () {
               $mdDialog.hide();
+              $location.path("/app/login");
             }
           }
         });
