@@ -172,7 +172,7 @@ angular.module('quickRideApp')
     if (loginForm.$valid) {
       AuthenticationService.login($scope.user).success(function (data) {
         console.log(data);
-        $location.path("/app/browse");
+        $location.path("/app/newRide");
       }).error(function (error) {
         if (error.errorCode === 1007) {
           $location.path('auth/accountActivation')
