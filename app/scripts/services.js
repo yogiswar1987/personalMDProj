@@ -238,8 +238,15 @@ angular.module('quickRideApp')
     },
     cancelPassengerRide:function(rideId,userId){
       var urlOpts = {
-        method: 'DELETE',
-        url: BASE_URL + 'QRPassengerRide/status?userId=' + userId +'&id='+rideId
+        method: 'PUT',
+        url: BASE_URL + 'QRRiderRide/status',
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj)
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          return str.join("&");
+        },
+        data: {id:rideId,status:'CANCELLED'}
       };
       return $http(urlOpts);
     }

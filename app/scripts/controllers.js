@@ -502,6 +502,7 @@ angular.module('quickRideApp')
   }).error(function (data) {
     console.log(data);
   });
+  $scope.maxRating = [1,2,3,4,5];
   $scope.$parent.selectedIndex = -1;
   $scope.selectedIndex = -1;
   $scope.flip = function ($index) {
@@ -516,59 +517,6 @@ angular.module('quickRideApp')
   };
   $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
 
-  $scope.riderRides = [{
-    "userid": 9739001010,
-    "rideid": 131,
-    "name": "qwer",
-    "userRole": "Passenger",
-    "gender": "M",
-    "rating": 0.0,
-    "startDate": 1449976680000,
-    "fromLocationAddress": "Marathahalli, Bengaluru, Karnataka, India",
-    "fromLocationLatitude": 12.9591722,
-    "fromLocationLongitude": 77.69741899999997,
-    "toLocationAddress": "Majestic, Bengaluru, Karnataka, India",
-    "toLocationLatitude": 12.9766637,
-    "toLocationLongitude": 77.57125559999997,
-    "pickupLocationLatitude": 12.95879,
-    "pickupLocationLongitude": 77.69748,
-    "pickupTime": 1449979260000,
-    "dropLocationLatitude": 12.9766637,
-    "dropLocationLongitude": 77.57125559999997,
-    "dropTime": 1449982860000,
-    "distance": 15.418,
-    "points": 77,
-    "matchPercentage": 100,
-    "noOfReviews": 0,
-    "verificationStatus": false,
-    "requiredSeats": 1
-  }, {
-    "userid": 9739001010,
-    "rideid": 131,
-    "name": "qwer",
-    "userRole": "Passenger",
-    "gender": "M",
-    "rating": 0.0,
-    "startDate": 1449976680000,
-    "fromLocationAddress": "Marathahalli, Bengaluru, Karnataka, India",
-    "fromLocationLatitude": 12.9591722,
-    "fromLocationLongitude": 77.69741899999997,
-    "toLocationAddress": "Majestic, Bengaluru, Karnataka, India",
-    "toLocationLatitude": 12.9766637,
-    "toLocationLongitude": 77.57125559999997,
-    "pickupLocationLatitude": 12.95879,
-    "pickupLocationLongitude": 77.69748,
-    "pickupTime": 1449979260000,
-    "dropLocationLatitude": 12.9766637,
-    "dropLocationLongitude": 77.57125559999997,
-    "dropTime": 1449982860000,
-    "distance": 15.418,
-    "points": 77,
-    "matchPercentage": 100,
-    "noOfReviews": 0,
-    "verificationStatus": false,
-    "requiredSeats": 1
-  }];
   google.maps.event.addListener($scope.from, 'place_changed', function () {
     var place = $scope.from.getPlace();
     place.formatted_address;
@@ -642,6 +590,13 @@ angular.module('quickRideApp')
       console.log(data);
     });
   };
+  $scope.cancelPassengerRide = function (rideId) {
+    rideManagementService.cancelPassengerRide(rideId, authenticationService.getPhone()).success(function (data) {
+      console.log(data);
+    }).error(function (data) {
+      console.log(data);
+    });
+  };
   rideManagementService.getAllRides(authenticationService.getPhone()).success(function (data) {
     console.log(data);
     console.log(data);
@@ -650,5 +605,3 @@ angular.module('quickRideApp')
     console.log(data);
   })
 }]);
-
-
