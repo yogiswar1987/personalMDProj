@@ -330,10 +330,11 @@ angular.module('quickRideApp')
   $scope.user = {};
   $scope.changePassword = function (changePasswordForm) {
     if (changePasswordForm.$valid) {
-      accountService.changePassword(authenticationService.getPhone(), $scope.user.old_pwd, $scope.user.new_pwd).success(function (data) {
+      accountService.changePassword(authenticationService.getPhone(), $scope.oldPassword, $scope.newPassword).success(function (data) {
         console.log(data);
-        $scope.user.old_pwd = '';
-        $scope.user.new_pwd = '';
+        $scope.oldPassword = '';
+        $scope.newPassword = '';
+        $scope.confirmPassword = '';
       }).error(function (error) {
         console.log(error);
       });

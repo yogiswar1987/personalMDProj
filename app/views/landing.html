@@ -7,7 +7,7 @@
         <li ng-repeat="image in slides">
           <div class="alignCenter text-landing">{{image.text}}</div>
           <div style="margin-right: auto;margin-left: auto;text-align: center;"><img ng-src="{{image.url}}"
-                                                                                     style="height: 300px;width: 300px;padding-top: 20px">
+           style="height: 300px;width: 300px;padding-top: 20px">
           </div>
         </li>
       </ul>
@@ -21,13 +21,10 @@
       </div>
 
       <div layout="row" layout-align="center center" class="divMargin">
-        <div layout="column" flex="80">
-          <md-button class="md-raised md-primary" href="#/auth/signUp">Sign up</md-button>
-          </a>
-        </div>
-        <div layout="column" flex="80">
-          <md-button class="md-raised md-accent" href="#/auth/login">Login</md-button>
-        </div>
+
+          <md-button layout="column" flex="90" class="md-raised md-primary" href="#/auth/signUp" style="margin-right:0;">Sign up</md-button>
+         <md-button layout="column" flex="90" class="md-raised md-accent" href="#/auth/login" style="margin-left:0;">Login</md-button>
+
       </div>
       <div layout="row" layout-align="center center" class="divMargin">
         <span>guest</span>

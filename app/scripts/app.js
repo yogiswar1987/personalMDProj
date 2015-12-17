@@ -13,12 +13,15 @@ angular.module('quickRideApp', [
     $openFB.init({appId: '1524191344558710'});
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,$httpProvider) {
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
     window.BASE_URL = "http://testrm.getquickride.com:8080/dishaapiserver/rest/";
     $mdThemingProvider.theme('default')
       .primaryPalette('green')
       .accentPalette('amber');
+
+    $httpProvider.interceptors.push('EPHttpInterceptors');
     $urlRouterProvider.otherwise('/landing');
     $stateProvider
 
@@ -123,5 +126,19 @@ angular.module('quickRideApp', [
   })
 
 
+  .factory('EPHttpInterceptors',['$location','$q','$rootScope',function EPHttpInterceptors($location,$q,$rootScope){
 
+    return {
+      request:function(config){
+        console.log("request");
+        $rootScope.isLoading = true;
+        return config;
+      },
+      response:function(response){
+        console.log("response");
+        $rootScope.isLoading = false;
+        return response;
+      }
 
+    };
+  }])

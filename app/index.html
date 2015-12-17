@@ -34,8 +34,10 @@
 <script src="lib/json3/lib/json3.min.js"></script>
 <![endif]-->
 
-<div ui-view style="height: 100%;min-width: 300px;min-height: 480px;max-width: 956px;margin: auto"></div>
-
+<div ui-view style="height: 100%;min-width: 300px;min-height: 480px;max-width: 956px;margin: auto" ></div>
+<div layout="row" layout-sm="column" layout-align="space-around" class="loadingindicator" ng-if="isLoading">
+  <md-progress-circular md-mode="indeterminate" style="left: 35%!important;"></md-progress-circular>
+</div>
 
 <script src="lib/angular/angular.min.js"></script>
 
