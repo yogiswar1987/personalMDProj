@@ -70,6 +70,12 @@ angular.module('quickRideApp')
           console.log(data);
         }).error(function (error) {
           console.log(error);
+
+          if(error.resultData.errorCode == 1002){
+            $scope.accountExistError = true;
+          }else{
+            $scope.accountExistError = false;
+          }
           $mdDialog.show({
             clickOutsideToClose: true,
             scope: $scope,
@@ -83,7 +89,9 @@ angular.module('quickRideApp')
 
               $scope.goToLogin = function () {
                 $mdDialog.hide();
+                var phoneNo = $scope.signUpData.phone;
                 $location.path('auth/login');
+                $location.search({phone: phoneNo});
               }
             }
           });
@@ -168,7 +176,12 @@ angular.module('quickRideApp')
   };
 
 }]).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService', '$mdDialog', function ($scope, $location, AuthenticationService, $mdDialog) {
-  $scope.user = {};
+    $scope.user = {};
+    if ($location.search().phone) {
+      $scope.user.phone = $location.search().phone;
+      $location.search( 'phone', null );
+    }
+
   $scope.login = function (loginForm) {
     if (loginForm.$valid) {
       AuthenticationService.login($scope.user).success(function (data) {

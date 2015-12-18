@@ -138,6 +138,10 @@ angular.module('quickRideApp', [
         console.log("response");
         $rootScope.isLoading = false;
         return response;
+      },
+      responseError:function(resp){
+        $rootScope.isLoading = false;
+        return $q.reject(resp);
       }
 
     };
