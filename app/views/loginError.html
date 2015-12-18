@@ -1,10 +1,12 @@
-<md-dialog aria-label="Login error" flex="90">
+<md-dialog aria-label="Login error" style="width:100px;">
   <md-dialog-content class="divMargin">
     <div layout="column" layout-align="center" style="margin-bottom: 5%;">
       <span layout="row" layout-align="center">{{errorMessage}}</span>
     </div>
 
-    <div layout layout-align="center center" class="divMargin">
+    <hr>
+
+    <div layout layout-align="center center">
       <md-button ng-click="closeDialog()" class="md-clear" flex="100">
         OK
       </md-button>
