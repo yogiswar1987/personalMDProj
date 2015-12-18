@@ -69,11 +69,11 @@ angular.module('quickRideApp')
           $location.path('auth/accountActivation');
           console.log(data);
         }).error(function (error) {
-          console.log(error);
-
-          if(error.resultData.errorCode == 1002){
+          console.log("error"+error);
+        if(error){
+          if (error.resultData.errorCode == 1002) {
             $scope.accountExistError = true;
-          }else{
+          } else {
             $scope.accountExistError = false;
           }
           $mdDialog.show({
@@ -95,6 +95,7 @@ angular.module('quickRideApp')
               }
             }
           });
+        }
         });
       }
     }
