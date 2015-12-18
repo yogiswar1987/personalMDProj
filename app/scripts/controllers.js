@@ -320,6 +320,7 @@ angular.module('quickRideApp')
           preserveScope: true,
           templateUrl: 'views/forgotPasswordConfirm.html',
           controller: function DialogController($scope, $mdDialog) {
+            $scope.message = "New password for Quickride has sent to your registered mobile number";
             $scope.closeDialog = function () {
               $mdDialog.hide();
               $location.path("/app/login");
@@ -340,16 +341,48 @@ angular.module('quickRideApp')
       });
     }
   };
-}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService', function ($scope, $location, accountService, authenticationService) {
+}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService','$mdDialog', function ($scope, $location, accountService, authenticationService,$mdDialog) {
   $scope.user = {};
+
+  function clearPwd(){
+    $scope.oldPassword = '';
+    $scope.newPassword = '';
+    $scope.confirmPassword = '';
+  }
+
   $scope.changePassword = function (changePasswordForm) {
     if (changePasswordForm.$valid) {
       accountService.changePassword(authenticationService.getPhone(), $scope.oldPassword, $scope.newPassword).success(function (data) {
         console.log(data);
-        $scope.oldPassword = '';
-        $scope.newPassword = '';
-        $scope.confirmPassword = '';
+
+        clearPwd();
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/forgotPasswordConfirm.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.message = "New password for Quickride has been changed successfully";
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
+            }
+          }
+        });
+
       }).error(function (error) {
+        clearPwd();
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/loginError.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.errorMessage = error.resultData.userMsg;
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
+            }
+          }
+        });
         console.log(error);
       });
     }
