@@ -35,7 +35,7 @@
 <![endif]-->
 
 <div ui-view style="height: 100%;min-width: 300px;max-width: 956px;margin: auto"></div>
-<div layout="row" layout-sm="column" layout-align="space-around" class="loadingindicator" ng-if="isLoading">
+<div layout="row" layout-sm="column" layout-align="space-around" class="loadingindicator" ng-show="isLoading">
   <md-progress-circular md-mode="indeterminate" style="left: 35%!important;"></md-progress-circular>
 </div>
 
