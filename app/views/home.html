@@ -1,32 +1,35 @@
 <div layout="row" flex style="height: 100%" ng-cloak>
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-    <md-toolbar class="md-theme-indigo">
-      <h1 class="md-toolbar-tools">Sidenav Left</h1>
+    <md-toolbar class="md-theme-indigo" style="height: 56px;background-color: whitesmoke !important;min-height: 50px !important;">
+      <div layout="row" class="md-toolbar-tools">
+      <img src="images/logo.png" style="height: 20px;width: 20px">
+      <h1  style="padding-left: 10px;">QuickRide</h1>
+        </div>
     </md-toolbar>
     <md-menu-content style="max-height: 100%">
       <md-menu-item>
-        <md-button ui-sref="app.profile">Profile</md-button>
+        <md-button ng-href="#/app/profile" ng-click="toggleSidenav('left')">Profile</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ui-sref="app.newRide">New Ride</md-button>
+        <md-button ui-sref="app.newRide" ng-click="toggleSidenav('left')">New Ride</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ui-sref="app.myRides">My Rides</md-button>
+        <md-button ui-sref="app.myRides" ng-click="toggleSidenav('left')">My Rides</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="doSomething()">My Rewards</md-button>
+        <md-button ng-click="doSomething()" ng-click="toggleSidenav('left')">My Rewards</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="doSomething()">Share & Earn</md-button>
+        <md-button ng-click="doSomething()" ng-click="toggleSidenav('left')">Share & Earn</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="doSomething()">Feedback</md-button>
+        <md-button ng-click="doSomething()" ng-click="toggleSidenav('left')">Feedback</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ui-sref="app.changePassword">Password</md-button>
+        <md-button ui-sref="app.changePassword" ng-click="toggleSidenav('left')">Password</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="logout()">Logout</md-button>
+        <md-button ng-click="logout()" ng-click="toggleSidenav('left')">Logout</md-button>
       </md-menu-item>
     </md-menu-content>
   </md-sidenav>

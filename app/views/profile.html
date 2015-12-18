@@ -3,9 +3,10 @@
     <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
       <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
     </div>
-    <h3>
-      My Profile
-    </h3>
+    <div layout="row" class="md-toolbar-tools">
+      <img src="images/logo.png" style="height: 20px;width: 20px">
+      <h1  style="padding-left: 10px;">My Profile</h1>
+    </div>
     <span flex></span>
     <md-button ng-click="updateProfile()" class="transparent" style="color: green">Save</md-button>
   </div>
