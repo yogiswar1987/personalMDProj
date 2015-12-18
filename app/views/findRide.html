@@ -12,7 +12,53 @@
   </div>
   <img src="/images/icon_swap.png" style="height: 25px;width: 20px;margin: auto;">
 </div>
-
+<div style="margin-top: 10px;overflow: hidden;">
+  <div ng-repeat="ride in riderRides"
+       style="font-size: 12px;">
+    <md-card style="position: relative;margin: 0px;padding: 5px" layout="row" flex>
+      <div class="flip-container">
+        <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
+          <div class="front" md-ink-ripple>
+            <img style="height:50px;width: 50px;margin: auto;border-radius: 50%;border: 1px solid #ddd;" ng-src="{{ride.imageURI?ride.imageURI:'/images/default_male.png'}}">
+          </div>
+          <div class="back" style="background-color: green" md-ink-ripple>
+            <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
+          </div>
+        </div>
+      </div>
+      <div layout="column" flex>
+        <div flex layout="row" md-ink-ripple="#008000">
+          <div style="padding-left: 20px">
+            <div style="padding-right: 10px">{{ride.name}}</div>
+          </div>
+          <div flex></div>
+          <div style="padding-left: 20px" flex layout="">
+            <div style="background-color: #dddddd !important;padding: 2px;border-radius: 10%;"
+                 ng-class="{verified:ride.verificationStatus}">VERIFIED
+            </div>
+          </div>
+          <div>{{ ride.startDate | date :'hh:mm a'}}</div>
+        </div>
+        <div layout="row">
+          <div layout="column" flex md-ink-ripple="#008000">
+            <div style="padding-left: 20px" layout="row">
+              <div ng-repeat="i in maxRating">
+                <ng-md-icon ng-if="i<=ride.rating" icon="star" style="fill: #FFD203" size="15"></ng-md-icon>
+                <ng-md-icon ng-if="i>ride.rating" icon="star" style="fill: #ddd" size="15"></ng-md-icon>
+              </div>
+            </div>
+            <div style="padding-left: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+              {{ride.fromLocationAddress}}
+            </div>
+            <div style="padding-left: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+              {{ride.toLocationAddress}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-card>
+  </div>
+</div>
 <div layout="row" layout-align="center">
   <md-button flex="90" class="md-raised md-primary" ng-click="requestRide()">Request Ride</md-button>
 </div>

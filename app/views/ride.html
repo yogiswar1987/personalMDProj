@@ -7,12 +7,12 @@
       Find Ride
     </h3>
     <span flex></span>
-    <md-button ng-if="selectedTab == 0 && selectedIndex>=0" ng-click="updateProfile()" class="transparent" style="color: green">Join</md-button>
-    <md-button ng-if="selectedTab == 0 && selectedIndex<0" ng-click="updateProfile()" class="transparent" style="color: green">Create ride</md-button>
+    <md-button ng-if="selectedTab == 0 && selectedIndex>=0" ng-click="joinRide()" class="transparent" style="color: green">Join</md-button>
+    <md-button ng-if="selectedTab == 0 && selectedIndex<0" ng-click="createRide()" class="transparent" style="color: green">Create ride</md-button>
   </div>
 </md-toolbar>
 <md-content layout="column">
-  <md-tabs md-stretch-tabs md-selected="selectedTab" class="md-primary">
+  <md-tabs md-stretch-tabs md-selected="selectedTab">
   <md-tab label="Offer Ride" ui-sref="app.ride.offerRide"></md-tab>
   <md-tab label="Find Ride" ui-sref="app.ride.findRide"></md-tab>
 </md-tabs>

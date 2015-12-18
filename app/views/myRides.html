@@ -16,7 +16,7 @@
     </md-button>
   </div>
 </md-toolbar>
-<md-tabs md-stretch-tabs md-selected="selectedTab" class="md-primary" flex>
+<md-tabs md-stretch-tabs md-selected="selectedTab" flex>
   <md-tab label="Upcoming">
     <div style="margin-top: 10px;overflow: hidden;">
       <div ng-repeat="ride in myRides | filter:getUpcoming"
@@ -75,7 +75,64 @@
     </div>
   </md-tab>
   <md-tab label="Completed">
-    <div style="padding-right: 20px;padding-left: 20px;overflow: hidden;">
+
+    <div style="margin-top: 10px;overflow: hidden;">
+      <div ng-repeat="ride in myRides | filter:getCompleted"
+           style="font-size: 12px;">
+        <md-card style="position: relative;margin: 0px;padding: 5px" layout="row" flex>
+          <div class="flip-container">
+            <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
+              <div class="front" md-ink-ripple>
+                <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
+              </div>
+              <div class="back" style="background-color: green" md-ink-ripple>
+                <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
+              </div>
+            </div>
+          </div>
+          <div layout="column" flex >
+            <div flex layout="row" md-ink-ripple="#008000">
+              <div style="padding-left: 20px" >
+                <div style="padding-right: 10px" ng-repeat="name in ride.passengers">{{name}}</div>
+                <div ng-hide="ride.passengers.length > 0">
+                  No passengers
+                </div>
+              </div>
+              <div flex></div>
+              <div style="padding-left: 20px" flex>{{ride.status}}</div>
+              <div>{{ ride.startTime | date :'ddMMM hh:mm a'}}</div>
+            </div>
+            <div layout="row" flex="89">
+              <div layout="column" flex md-ink-ripple="#008000">
+                <div style="padding-left: 20px">&nbsp;</div>
+                <div style="padding-left: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ride.startAddress}}</div>
+                <div style="padding-left: 20px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ride.endAddress}}</div>
+              </div>
+              <div flex="11">
+                <md-menu >
+                  <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+                    <ng-md-icon icon="more_vert"></ng-md-icon>
+                  </md-button>
+                  <md-menu-content>
+                    <md-menu-item>
+                      <md-button ng-click="cancelPassengerRide(ride.id)">Cancel</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="repearRide()">Repeat</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="returnRide()">Return ride</md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </div>
+            </div>
+          </div>
+        </md-card>
+      </div>
+    </div>
+
+   <!-- <div style="padding-right: 20px;padding-left: 20px;overflow: hidden;">
       <div ng-repeat="ride in myRides | filter:getCompleted"
            style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
         <div layout="row" flex>
@@ -102,7 +159,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </md-tab>
 </md-tabs>
 

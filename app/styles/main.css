@@ -183,11 +183,13 @@ md-sidenav ng-md-icon {
   border-radius: 50%;
   transform: rotateY(180deg);
 }
+
 .star-rating {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
+
 .star-rating .star {
   padding: 1px;
   color: #ddd;
@@ -197,19 +199,23 @@ md-sidenav ng-md-icon {
   display: inline-block;
   cursor: pointer;
 }
+
 .star-rating .star.filled {
   color: #fd0;
 }
+
 .star-rating.readonly .star.filled {
   color: #666;
 }
-.verified{
+
+.verified {
   background-color: limegreen !important;
   color: white;
   padding: 2px;
   border-radius: 10%;
 }
-.loadingindicator{
+
+.loadingindicator {
   height: 100%;
   width: 100%;
   position: fixed;
@@ -217,4 +223,12 @@ md-sidenav ng-md-icon {
   right: 0px;
   z-index: 33333;
   /*background-color: blue;*/
+}
+
+.md-tab {
+  color: green !important;
+}
+
+.md-active {
+  color: black !important;
 }

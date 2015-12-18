@@ -359,7 +359,8 @@ angular.module('quickRideApp')
 
     }
   }
-}]).controller('NewRideCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
+}]).controller('NewRideCtrl', ['$scope', '$timeout','$rootScope', function ($scope, $timeout,$rootScope) {
+   // $rootScope.isLoading = true;
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
     var mapOptions = {
@@ -569,7 +570,7 @@ angular.module('quickRideApp')
   $scope.requestRide = function () {
     if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
       rideManagementService.requestRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), new Date()).success(function (data) {
-        console.log(data);
+        $scope.riderRides = data.resultData;
       }).error(function (data) {
         console.log(data);
       });
