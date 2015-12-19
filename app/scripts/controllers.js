@@ -318,7 +318,7 @@ angular.module('quickRideApp')
           clickOutsideToClose: true,
           scope: $scope,
           preserveScope: true,
-          templateUrl: 'views/forgotPasswordConfirm.html',
+          templateUrl: 'views/generalConfirm.html',
           controller: function DialogController($scope, $mdDialog) {
             $scope.message = "New password for Quickride has sent to your registered mobile number";
             $scope.closeDialog = function () {
@@ -360,7 +360,7 @@ angular.module('quickRideApp')
           clickOutsideToClose: true,
           scope: $scope,
           preserveScope: true,
-          templateUrl: 'views/forgotPasswordConfirm.html',
+          templateUrl: 'views/generalConfirm.html',
           controller: function DialogController($scope, $mdDialog) {
             $scope.message = "New password for Quickride has been changed successfully";
             $scope.closeDialog = function () {
