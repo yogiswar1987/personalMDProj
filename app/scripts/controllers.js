@@ -563,7 +563,9 @@ angular.module('quickRideApp')
       google.maps.event.trigger($scope.map, 'resize');
     })
   }])
-  .controller('RideCtrl', ['$scope', function ($scope) {
+  .controller('RewardsCtrl', ['$scope', function ($scope) {
+
+  }]).controller('RideCtrl', ['$scope', function ($scope) {
     /*   var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
      var mapOptions = {

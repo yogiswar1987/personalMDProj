@@ -1,0 +1,68 @@
+<md-toolbar style="background-color: whitesmoke !important;min-height: 50px !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;height: 50px">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
+    </div>
+    <div layout="row">
+      <img src="images/logo.png" style="height: 20px;width: 20px">
+
+      <h1 style="padding-left: 10px;">My rewards</h1>
+    </div>
+  </div>
+</md-toolbar>
+<md-tabs md-stretch-tabs md-selected="selectedTab" flex>
+  <md-tab>
+    <md-tab-label>Account</md-tab-label>
+    <md-tab-body>
+      <div class="divMargin divLayout" style="margin-right:2%;">
+        <div layout="row" layout-align="center">
+          <div layout="column" flex="60">
+            <span class="md-body-1">100 points</span>
+          </div>
+          <div layout="column" flex="40">
+            <span class="md-body-1">Transactions</span>
+          </div>
+        </div>
+
+        <div class="divMargin" style="border-bottom: 1px darkgrey dotted;"></div>
+
+        <div layout="row" class="divMargin">
+          <span class="md-body-1">Recharge to avail quick rides</span>
+        </div>
+
+        <div layout="row" class="divMargin">
+          <md-button class="md-transparent rewardButtonStyle">100</md-button>
+          <md-button class="md-transparent rewardButtonStyle">200</md-button>
+          <md-button class="md-transparent rewardButtonStyle">500</md-button>
+          <md-button class="md-transparent rewardButtonStyle">1000</md-button>
+        </div>
+
+        <div layout="row" class="divMargin">
+          <md-input-container md-no-float layout="column" flex="70">
+            <input type="text" placeholder="Amount to recharge(Rs 5- 10000)">
+          </md-input-container>
+
+          <span layout="column" flex="30" style="background-color:cornsilk;height:32px;">1 point = 1 Rs</span>
+        </div>
+
+        <div layout layout-align="center center">
+          <md-button class="md-raised md-primary" class="md-clear" flex="100">
+            Recharge
+          </md-button>
+        </div>
+
+        <div layout="row" class="divMargin">
+          <span class="md-body-1" style="color:darkgrey;">Quick Ride wallet is safe and fully refundable</span>
+        </div>
+
+      </div>
+    </md-tab-body>
+  </md-tab>
+
+  <md-tab>
+    <md-tab-label>Encash</md-tab-label>
+    <md-tab-body>
+
+    </md-tab-body>
+  </md-tab>
+</md-tabs>

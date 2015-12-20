@@ -126,6 +126,12 @@ md-sidenav ng-md-icon {
   marin-right: 5%;
 }
 
+.rewardButtonStyle{
+  border:1px darkgrey solid;
+  margin:0px 0px;
+  padding:0px 0px;
+}
+
 .fontColorGreen{
   color: rgb(76,175,80);
 }

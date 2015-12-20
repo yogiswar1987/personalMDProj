@@ -128,6 +128,11 @@ angular.module('quickRideApp', [
         templateUrl: 'views/feedback.html',
         controller: 'FeedbackCtrl'
       })
+      .state('app.rewards', {
+        url: '/rewards',
+        templateUrl: 'views/rewards.html',
+        controller: 'RewardsCtrl'
+      })
       .state('app.shareAndEarn', {
         url: '/shareAndEarn',
         templateUrl: 'views/shareAndEarn.html',
