@@ -1,0 +1,40 @@
+<md-toolbar style="background-color: whitesmoke !important;min-height: 50px !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;height: 50px">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
+    </div>
+    <div layout="row">
+      <img src="images/logo.png" style="height: 20px;width: 20px">
+      <h1  style="padding-left: 10px;">Feedback</h1>
+    </div>
+  </div>
+</md-toolbar>
+
+<div layout="column" ng-cloak class="divLayout">
+
+  <div layout="row" layout-align="center" class="divMargin">
+    <span class="md-body-1">Help us to serve you better</span>
+  </div>
+
+  <div layout="row" layout-align="center" class="divMargin">
+    <fieldset class="rating" style="border:none;width:200px;">
+      <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+      <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+      <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+      <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+      <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+    </fieldset>
+  </div>
+
+  <div layout="column"  layout-align="center" style="margin-left: 5%;margin-right: 5%">
+    <md-input-container class="md-block">
+      <label>Comments</label>
+      <textarea ng-model="profile.aboutme" name="about" columns="1" md-maxlength="150" rows="2"></textarea>
+    </md-input-container>
+  </div>
+
+  <div layout="row" layout-align="center">
+    <md-button flex="90" class="md-raised md-primary">Submit Feedback</md-button>
+  </div>
+
+</div>

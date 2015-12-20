@@ -1,7 +1,7 @@
 angular.module('quickRideApp')
 
-  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav',
-    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav) {
+  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav','$mdDialog',
+    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav,$mdDialog) {
       $scope.menu = [
         {
           link: '',
@@ -27,6 +27,21 @@ angular.module('quickRideApp')
         sessionStorage.clear();
         authenticationService.logout();
         $location.path('#/auth/landing');
+      };
+
+      $scope.showLogoutPopup = function () {
+        $scope.confirmMessage = "Do you want to logout?"
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/logoutError.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
+            }
+          }
+        });
       };
 
     }])
@@ -406,7 +421,74 @@ angular.module('quickRideApp')
 
     }
   }
-}]).controller('NewRideCtrl', ['$scope', '$timeout','$rootScope', function ($scope, $timeout,$rootScope) {
+}]).controller('ShareAndEarnCtrl', ['$scope', function ($scope) {
+    $scope.referralCode = "BKG53";
+
+    $scope.items = [{name: "SMS"},{name: "Gmail"},{name: "Whatsapp"},{name: "Facebook"}];
+
+
+  }]).controller('FeedbackCtrl', ['$scope', function ($scope) {
+    $scope.model = {
+      basic: 0,
+      readonly: 2.5,
+      readonly_enables: true,
+      minMaxStep:6,
+      pristine: 3,
+      resetable: 1,
+      heightWidth: 1.5,
+      callbacks: 5,
+      custom: 4,
+    };
+
+    $scope.ratedCallback = function () {
+      alert('The rated value is: '+$scope.model.callbacks);
+      console.log('The rated value is: '+$scope.model.callbacks);
+    };
+
+    $scope.resetCallback = function () {
+      alert('Reset clicked!');
+      console.log('Reset clicked!');
+    };
+
+    $scope.overCallback = function (e) {
+      console.log('overCallback', e);
+    };
+
+    $scope.confirmReset = function () {
+      var d = $q.defer();
+      if(confirm('Are you sure about resetting this rating?')){
+        d.resolve();
+      }else{
+        d.reject();
+      }
+      return d.promise;
+    };
+
+    $scope.confirmRating = function (newRating) {
+      var d = $q.defer();
+
+      $timeout(function  () {
+        if(confirm('Are you sure about rating us with '+newRating+' stars?')){
+          d.resolve();
+        }else{
+          d.reject();
+        }
+      });
+
+      return d.promise;
+    };
+
+    $scope.confirmReset = function () {
+      var d = $q.defer();
+      if(confirm('Are you sure about resetting this rating?')){
+        d.resolve();
+      }else{
+        d.reject();
+      }
+      return d.promise;
+    };
+
+  }]).controller('NewRideCtrl', ['$scope', '$timeout','$rootScope', function ($scope, $timeout,$rootScope) {
    // $rootScope.isLoading = true;
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
