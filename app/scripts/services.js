@@ -188,12 +188,17 @@ angular.module('quickRideApp')
       return $http(urlOpts);
 
     },
-    getPassengerRides: function (userId, startLatitude, startLongitude, startTime) {
+    getPassengerRides: function (userId, startLatitude, startLongitude, startTime,endLatitude,endLongitude) {
       var month = '' + (startTime.getMonth() + 1);
       var day = '' + startTime.getDate();
       var year = '' + startTime.getFullYear();
       var hour = '' + startTime.getHours();
       var minutes = '' + startTime.getMinutes();
+      var url = 'startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&id=0&userId=8095054296';
+
+      if(endLatitude && endLongitude){
+        url = url+'&endLatitude ='+endLatitude+'&endLongitude='+endLongitude;
+      }
 
       if (month.length < 2) month = '0' + month;
       if (day.length < 2) day = '0' + day;
@@ -201,8 +206,8 @@ angular.module('quickRideApp')
       if (minutes.length < 2) minutes = '0' + minutes;
       var urlOpts = {
         method: 'GET',
-        url: BASE_URL + 'QRRidematcher/passengers/location?startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&id=0&userId=8095054296'
-      };
+        url: BASE_URL + 'QRRidematcher/passengers/location?'+url
+        };
       return $http(urlOpts);
     },
     getRiderRides: function (userId, startLatitude, startLongitude, startTime) {
@@ -238,15 +243,8 @@ angular.module('quickRideApp')
     },
     cancelPassengerRide:function(rideId,userId){
       var urlOpts = {
-        method: 'PUT',
-        url: BASE_URL + 'QRRiderRide/status',
-        transformRequest: function (obj) {
-          var str = [];
-          for (var p in obj)
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          return str.join("&");
-        },
-        data: {id:rideId,status:'CANCELLED'}
+        method: 'DELETE',
+        url: BASE_URL + 'QRPassengerRide?id='+rideId+'&userId='+userId
       };
       return $http(urlOpts);
     }

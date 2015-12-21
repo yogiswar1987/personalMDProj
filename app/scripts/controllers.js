@@ -548,6 +548,11 @@ angular.module('quickRideApp')
     place.formatted_address;
     place.geometry.location.lat();
     place.geometry.location.lng();
+    rideManagementService.getPassengerRides(authenticationService.getPhone(), place.geometry.location.lat(), place.geometry.location.lng(), new Date(),place.geometry.location.lat(),place.geometry.location.lng()).success(function (data) {
+      $scope.riderRides = data.resultData;
+    }).error(function (data) {
+      console.log(data);
+    });
   });
 
   $scope.offerRide = function () {
@@ -567,7 +572,7 @@ angular.module('quickRideApp')
     place.geometry.location.lat();
     place.geometry.location.lng();
     rideManagementService.getRiderRides(authenticationService.getPhone(), place.geometry.location.lat(), place.geometry.location.lng(), new Date()).success(function (data) {
-      console.log(data);
+      $scope.riderRides = data.resultData;
     }).error(function (data) {
       console.log(data);
     })
@@ -583,7 +588,7 @@ angular.module('quickRideApp')
   $scope.requestRide = function () {
     if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
       rideManagementService.requestRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), new Date()).success(function (data) {
-        $scope.riderRides = data.resultData;
+       console.log(data);
       }).error(function (data) {
         console.log(data);
       });
