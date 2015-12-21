@@ -1,7 +1,7 @@
 angular.module('quickRideApp')
 
-  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav',
-    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav) {
+  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav','$mdDialog',
+    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav,$mdDialog) {
       $scope.menu = [
         {
           link: '',
@@ -27,6 +27,21 @@ angular.module('quickRideApp')
         sessionStorage.clear();
         authenticationService.logout();
         $location.path('#/auth/landing');
+      };
+
+      $scope.showLogoutPopup = function () {
+        $scope.confirmMessage = "Do you want to logout?"
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/logoutError.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
+            }
+          }
+        });
       };
 
     }])
@@ -69,11 +84,11 @@ angular.module('quickRideApp')
           $location.path('auth/accountActivation');
           console.log(data);
         }).error(function (error) {
-          console.log(error);
-
-          if(error.resultData.errorCode == 1002){
+          console.log("error"+error);
+        if(error){
+          if (error.resultData.errorCode == 1002) {
             $scope.accountExistError = true;
-          }else{
+          } else {
             $scope.accountExistError = false;
           }
           $mdDialog.show({
@@ -95,6 +110,7 @@ angular.module('quickRideApp')
               }
             }
           });
+        }
         });
       }
     }
@@ -317,8 +333,9 @@ angular.module('quickRideApp')
           clickOutsideToClose: true,
           scope: $scope,
           preserveScope: true,
-          templateUrl: 'views/forgotPasswordConfirm.html',
+          templateUrl: 'views/generalConfirm.html',
           controller: function DialogController($scope, $mdDialog) {
+            $scope.message = "New password for Quickride has sent to your registered mobile number";
             $scope.closeDialog = function () {
               $mdDialog.hide();
               $location.path("/app/login");
@@ -339,16 +356,48 @@ angular.module('quickRideApp')
       });
     }
   };
-}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService', function ($scope, $location, accountService, authenticationService) {
+}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService','$mdDialog', function ($scope, $location, accountService, authenticationService,$mdDialog) {
   $scope.user = {};
+
+  function clearPwd(){
+    $scope.oldPassword = '';
+    $scope.newPassword = '';
+    $scope.confirmPassword = '';
+  }
+
   $scope.changePassword = function (changePasswordForm) {
     if (changePasswordForm.$valid) {
       accountService.changePassword(authenticationService.getPhone(), $scope.oldPassword, $scope.newPassword).success(function (data) {
         console.log(data);
-        $scope.oldPassword = '';
-        $scope.newPassword = '';
-        $scope.confirmPassword = '';
+
+        clearPwd();
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/generalConfirm.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.message = "New password for Quickride has been changed successfully";
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
+            }
+          }
+        });
+
       }).error(function (error) {
+        clearPwd();
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,
+          preserveScope: true,
+          templateUrl: 'views/loginError.html',
+          controller: function DialogController($scope, $mdDialog) {
+            $scope.errorMessage = error.resultData.userMsg;
+            $scope.closeDialog = function () {
+              $mdDialog.hide();
+            }
+          }
+        });
         console.log(error);
       });
     }
@@ -372,7 +421,74 @@ angular.module('quickRideApp')
 
     }
   }
-}]).controller('NewRideCtrl', ['$scope', '$timeout','$rootScope', function ($scope, $timeout,$rootScope) {
+}]).controller('ShareAndEarnCtrl', ['$scope', function ($scope) {
+    $scope.referralCode = "BKG53";
+
+    $scope.items = [{name: "SMS"},{name: "Gmail"},{name: "Whatsapp"},{name: "Facebook"}];
+
+
+  }]).controller('FeedbackCtrl', ['$scope', function ($scope) {
+    $scope.model = {
+      basic: 0,
+      readonly: 2.5,
+      readonly_enables: true,
+      minMaxStep:6,
+      pristine: 3,
+      resetable: 1,
+      heightWidth: 1.5,
+      callbacks: 5,
+      custom: 4,
+    };
+
+    $scope.ratedCallback = function () {
+      alert('The rated value is: '+$scope.model.callbacks);
+      console.log('The rated value is: '+$scope.model.callbacks);
+    };
+
+    $scope.resetCallback = function () {
+      alert('Reset clicked!');
+      console.log('Reset clicked!');
+    };
+
+    $scope.overCallback = function (e) {
+      console.log('overCallback', e);
+    };
+
+    $scope.confirmReset = function () {
+      var d = $q.defer();
+      if(confirm('Are you sure about resetting this rating?')){
+        d.resolve();
+      }else{
+        d.reject();
+      }
+      return d.promise;
+    };
+
+    $scope.confirmRating = function (newRating) {
+      var d = $q.defer();
+
+      $timeout(function  () {
+        if(confirm('Are you sure about rating us with '+newRating+' stars?')){
+          d.resolve();
+        }else{
+          d.reject();
+        }
+      });
+
+      return d.promise;
+    };
+
+    $scope.confirmReset = function () {
+      var d = $q.defer();
+      if(confirm('Are you sure about resetting this rating?')){
+        d.resolve();
+      }else{
+        d.reject();
+      }
+      return d.promise;
+    };
+
+  }]).controller('NewRideCtrl', ['$scope', '$timeout','$rootScope', function ($scope, $timeout,$rootScope) {
    // $rootScope.isLoading = true;
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
@@ -447,7 +563,9 @@ angular.module('quickRideApp')
       google.maps.event.trigger($scope.map, 'resize');
     })
   }])
-  .controller('RideCtrl', ['$scope', function ($scope) {
+  .controller('RewardsCtrl', ['$scope', function ($scope) {
+
+  }]).controller('RideCtrl', ['$scope', function ($scope) {
     /*   var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
      var mapOptions = {

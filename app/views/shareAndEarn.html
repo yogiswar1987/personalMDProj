@@ -1,0 +1,34 @@
+<md-toolbar style="background-color: whitesmoke !important;min-height: 50px !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;height: 50px">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
+    </div>
+    <div layout="row">
+      <img src="images/logo.png" style="height: 20px;width: 20px">
+
+      <h1 style="padding-left: 10px;">Share & Earn</h1>
+    </div>
+  </div>
+</md-toolbar>
+
+<div layout="column" ng-cloak class="divLayoutMoreMargin">
+
+  <div layout="row" layout-align="center" class="divMargin">
+    <span
+      class="md-body-1">Share your referral code with your family and friends and get 50 free ride free points</span>
+  </div>
+
+
+  <div layout="row" layout-align="center" class="divMargin">
+    <span class="md-display-1 fontColorGreen">{{referralCode}}</span>
+  </div>
+
+  <div layout="row" layout-align="start" class="divMargin divLayout">
+    <md-list flex="80">
+      <md-list-item ng-repeat="item in items" md-ink-ripple style="border-bottom: 1px darkgrey dotted;">
+        <span class="md-body-1" style="font-size: 20px;">{{item.name}}</span>
+      </md-list-item>
+    </md-list>
+  </div>
+
+</div>

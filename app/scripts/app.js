@@ -122,6 +122,21 @@ angular.module('quickRideApp', [
         url: '/playlists/:playlistId',
         templateUrl: 'views/playlist.html',
         controller: 'PlaylistCtrl'
+      })
+      .state('app.feedback', {
+        url: '/feedback',
+        templateUrl: 'views/feedback.html',
+        controller: 'FeedbackCtrl'
+      })
+      .state('app.rewards', {
+        url: '/rewards',
+        templateUrl: 'views/rewards.html',
+        controller: 'RewardsCtrl'
+      })
+      .state('app.shareAndEarn', {
+        url: '/shareAndEarn',
+        templateUrl: 'views/shareAndEarn.html',
+        controller: 'ShareAndEarnCtrl'
       });
   })
 

@@ -17,19 +17,19 @@
         <md-button ui-sref="app.myRides" ng-click="toggleSidenav('left')">My Rides</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="doSomething()" ng-click="toggleSidenav('left')">My Rewards</md-button>
+        <md-button ui-sref="app.rewards" ng-click="toggleSidenav('left')">My Rewards</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="doSomething()" ng-click="toggleSidenav('left')">Share & Earn</md-button>
+        <md-button ui-sref="app.shareAndEarn" ng-click="toggleSidenav('left')">Share & Earn</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="doSomething()" ng-click="toggleSidenav('left')">Feedback</md-button>
+        <md-button ui-sref="app.feedback" ng-click="toggleSidenav('left')">Feedback</md-button>
       </md-menu-item>
       <md-menu-item>
         <md-button ui-sref="app.changePassword" ng-click="toggleSidenav('left')">Password</md-button>
       </md-menu-item>
       <md-menu-item>
-        <md-button ng-click="logout()" ng-click="toggleSidenav('left')">Logout</md-button>
+        <md-button ng-click="showLogoutPopup()" ng-click="toggleSidenav('left')">Logout</md-button>
       </md-menu-item>
     </md-menu-content>
   </md-sidenav>

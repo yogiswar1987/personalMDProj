@@ -1,0 +1,18 @@
+<md-dialog aria-label="Login error" style="width:120px;">
+  <md-dialog-content class="divMargin" style="margin-left: 4%;margin-right:4%">
+    <div layout="column" layout-align="center">
+      <span layout="row" layout-align="center" class="md-body-1">{{confirmMessage}}</span>
+    </div>
+
+    <div layout layout-align="center center" class="divMargin" style="margin-bottom: 2%;">
+      <md-button class="md-raised md-primary" ng-click="closeDialog()" class="md-clear" flex="45">
+        No
+      </md-button>
+
+      <md-button ng-click="logout()" class="md-clear" flex="45">
+        Yes
+      </md-button>
+    </div>
+
+  </md-dialog-content>
+</md-dialog>
