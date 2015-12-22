@@ -249,6 +249,12 @@ angular.module('quickRideApp')
       return $http(urlOpts);
     }
   }
+}]).factory('FeedbackService', ['$http', function ($http) {
+    return {
+      submitFeedback: function(){
+
+      }
+    }
 }]).factory('ProfileService', ['$http', function ($http) {
   return {
     getVehicle: function (userId) {
