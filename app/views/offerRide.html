@@ -2,7 +2,7 @@
   <div layout="column" flex style="padding: 9px;">
     <div flex layout="row">
       <img ng-src="/images/icon_from.png" style="height: 15px;left: 1%;position: relative">
-      <input type="text" id="from" placeholder="Enter ride start address" flex style="margin: 0px 10px;">
+      <input type="text" id="from" placeholder="Enter ride start address" flex style="margin: 0px 10px;" ng-model="fromAddr">
     </div>
     <div flex layout="row">
       <img ng-src="/images/icon_to.png" style="height: 10px;left: 1%;bottom: -10px;position: relative">
@@ -57,33 +57,6 @@
       </div>
     </md-card>
   </div>
-
-  <!-- <div ng-repeat="ride in riderRides" style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
-     <div layout="row" flex>
-       <div class="flip-container">
-         <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
-           <div class="front" md-ink-ripple>
-             <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
-           </div>
-           <div class="back" style="background-color: green" md-ink-ripple>
-             <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
-           </div>
-         </div>
-       </div>
-       <div layout="column" flex >
-         <div flex layout="row">
-           <div style="padding-left: 20px">{{ride.name}}</div>
-           <div flex></div>
-           <div style="padding-left: 20px" flex>Verified</div>
-           <div>Date time</div>
-         </div>
-         <div style="padding-left: 20px">*****</div>
-         <div style="padding-left: 20px">{{ride.fromLocationAddress}}</div>
-         <div style="padding-left: 20px">{{ride.toLocationAddress}}</div>
-       </div>
-     </div>
-
-   </div>-->
 </div>
 <div layout="row" layout-align="center">
   <md-button flex="90" class="md-raised md-primary" ng-click="offerRide()">Offer Ride</md-button>

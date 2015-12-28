@@ -1,7 +1,7 @@
 angular.module('quickRideApp')
 
-  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav','$mdDialog',
-    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav,$mdDialog) {
+  .controller('HomeCtrl', ['$rootScope', '$scope', '$timeout', '$location', 'AuthenticationService', '$mdSidenav', '$mdDialog',
+    function ($rootScope, $scope, $timeout, $location, authenticationService, $mdSidenav, $mdDialog) {
       $scope.menu = [
         {
           link: '',
@@ -84,33 +84,33 @@ angular.module('quickRideApp')
           $location.path('auth/accountActivation');
           console.log(data);
         }).error(function (error) {
-          console.log("error"+error);
-        if(error){
-          if (error.resultData.errorCode == 1002) {
-            $scope.accountExistError = true;
-          } else {
-            $scope.accountExistError = false;
-          }
-          $mdDialog.show({
-            clickOutsideToClose: true,
-            scope: $scope,
-            preserveScope: true,
-            templateUrl: 'views/signUpError.html',
-            controller: function DialogController($scope, $mdDialog) {
-              $scope.errorMessage = error.resultData.userMsg;
-              $scope.closeDialog = function () {
-                $mdDialog.hide();
-              }
-
-              $scope.goToLogin = function () {
-                $mdDialog.hide();
-                var phoneNo = $scope.signUpData.phone;
-                $location.path('auth/login');
-                $location.search({phone: phoneNo});
-              }
+          console.log("error" + error);
+          if (error) {
+            if (error.resultData.errorCode == 1002) {
+              $scope.accountExistError = true;
+            } else {
+              $scope.accountExistError = false;
             }
-          });
-        }
+            $mdDialog.show({
+              clickOutsideToClose: true,
+              scope: $scope,
+              preserveScope: true,
+              templateUrl: 'views/signUpError.html',
+              controller: function DialogController($scope, $mdDialog) {
+                $scope.errorMessage = error.resultData.userMsg;
+                $scope.closeDialog = function () {
+                  $mdDialog.hide();
+                }
+
+                $scope.goToLogin = function () {
+                  $mdDialog.hide();
+                  var phoneNo = $scope.signUpData.phone;
+                  $location.path('auth/login');
+                  $location.search({phone: phoneNo});
+                }
+              }
+            });
+          }
         });
       }
     }
@@ -192,11 +192,11 @@ angular.module('quickRideApp')
   };
 
 }]).controller('LoginCtrl', ['$scope', '$location', 'AuthenticationService', '$mdDialog', function ($scope, $location, AuthenticationService, $mdDialog) {
-    $scope.user = {};
-    if ($location.search().phone) {
-      $scope.user.phone = $location.search().phone;
-      $location.search( 'phone', null );
-    }
+  $scope.user = {};
+  if ($location.search().phone) {
+    $scope.user.phone = $location.search().phone;
+    $location.search('phone', null);
+  }
 
   $scope.login = function (loginForm) {
     if (loginForm.$valid) {
@@ -244,6 +244,7 @@ angular.module('quickRideApp')
       $scope.profile.matchGenderConstraint = response.userProfile.matchGenderConstraint;
       $scope.profile.emergencyContactNumber = response.userProfile.emergencyContactNumber;
 
+      $scope.vehicle.id = response.vehicle.id;
       $scope.vehicle.model = response.vehicle.model;
       $scope.vehicle.regno = response.vehicle.regno;
       $scope.vehicle.capacity = response.vehicle.capacity;
@@ -289,8 +290,14 @@ angular.module('quickRideApp')
       })(file);
     };
     $scope.updateProfile = function () {
+      var updateVehiclePromise;
       var updateProfilePromise = profileService.updateProfileDetail($scope.profile);
-      var updateVehiclePromise = profileService.updateVehicleDetail($scope.vehicle);
+      if ($scope.vehicle.id != 0) {
+        updateVehiclePromise = profileService.updateVehicleDetail($scope.vehicle);
+      }
+      else {
+        updateVehiclePromise = profileService.createVehicle($scope.vehicle);
+      }
       $q.all([updateProfilePromise, updateVehiclePromise]).then(function (data) {
         console.log(data);
       }, function (data) {
@@ -356,10 +363,10 @@ angular.module('quickRideApp')
       });
     }
   };
-}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService','$mdDialog', function ($scope, $location, accountService, authenticationService,$mdDialog) {
+}]).controller('ChangePasswordCtrl', ['$scope', '$location', 'AccountService', 'AuthenticationService', '$mdDialog', function ($scope, $location, accountService, authenticationService, $mdDialog) {
   $scope.user = {};
 
-  function clearPwd(){
+  function clearPwd() {
     $scope.oldPassword = '';
     $scope.newPassword = '';
     $scope.confirmPassword = '';
@@ -422,20 +429,20 @@ angular.module('quickRideApp')
     }
   }
 }]).controller('ShareAndEarnCtrl', ['$scope', function ($scope) {
-    $scope.referralCode = "BKG53";
+  $scope.referralCode = "BKG53";
 
-    $scope.items = [{name: "SMS"},{name: "Gmail"},{name: "Whatsapp"},{name: "Facebook"}];
-
-
-  }]).controller('FeedbackCtrl', ['$scope', function ($scope) {
-
-    $scope.showRating = function(){
-      console.log("Sadsads------"+$scope.feedback.ratingStar);
-    }
+  $scope.items = [{name: "SMS"}, {name: "Gmail"}, {name: "Whatsapp"}, {name: "Facebook"}];
 
 
-  }]).controller('NewRideCtrl', ['$scope', '$timeout','$rootScope', function ($scope, $timeout,$rootScope) {
-   // $rootScope.isLoading = true;
+}]).controller('FeedbackCtrl', ['$scope', function ($scope) {
+
+  $scope.showRating = function () {
+    console.log("Sadsads------" + $scope.feedback.ratingStar);
+  }
+
+
+}]).controller('NewRideCtrl', ['$scope', '$timeout', '$rootScope','$http', function ($scope, $timeout, $rootScope,$http) {
+    // $rootScope.isLoading = true;
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
     var mapOptions = {
@@ -448,6 +455,26 @@ angular.module('quickRideApp')
       mapOptions);
     navigator.geolocation.getCurrentPosition(function (pos) {
       var myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+
+      $scope.currentLocation = new google.maps.places.Autocomplete(document.getElementById('currentLocation'));
+      geocodePosition(myLatLng);
+      /*$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&?key=AIzaSyCckcroPYOjwQtN2RQUhH-gb7UldGtxJAI').success(function (data) {
+        $scope.locationAddr = data.results[0].formatted_address;
+        sessionStorage.setItem("fromAddress",data.results[0].formatted_address);
+        sessionStorage.setItem("fromLat",pos.coords.latitude);
+        sessionStorage.setItem("fromLng",pos.coords.longitude);
+      }).error(function (data) {
+        console.log(data);
+      });*/
+
+      google.maps.event.addListener($scope.currentLocation, 'place_changed', function () {
+        var place = $scope.currentLocation.getPlace();
+        sessionStorage.setItem("fromAddress",place.formatted_address);
+        sessionStorage.setItem("fromLat",place.geometry.location.lat());
+        sessionStorage.setItem("fromLng",place.geometry.location.lng());
+        $scope.marker.setPosition( place.geometry.location );
+        $scope.map.panTo( place.geometry.location );
+      });
       $scope.map.setCenter(myLatLng);
       $scope.map.setZoom(16);
       var circle = new google.maps.Circle({
@@ -474,7 +501,7 @@ angular.module('quickRideApp')
         origin: new google.maps.Point(0, 0), // origin
         anchor: new google.maps.Point(25, 45) // anchor
       };
-      var marker = new google.maps.Marker({
+      $scope.marker = new google.maps.Marker({
         position: myLatLng,
         draggable: true,
         animation: google.maps.Animation.DROP,
@@ -482,8 +509,8 @@ angular.module('quickRideApp')
         icon: icon
       });
 
-      google.maps.event.addListener(marker, 'dragend', function () {
-        geocodePosition(marker.getPosition());
+      google.maps.event.addListener($scope.marker, 'dragend', function () {
+        geocodePosition($scope.marker.getPosition());
       });
     }, function (error) {
       alert('Unable to get location: ' + error.message);
@@ -496,7 +523,11 @@ angular.module('quickRideApp')
         },
         function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            console.log(results[0].formatted_address);
+            sessionStorage.setItem("fromAddress",results[0].formatted_address);
+            sessionStorage.setItem("fromLat",results[0].geometry.location.lat());
+            sessionStorage.setItem("fromLng",results[0].geometry.location.lng());
+            $scope.locationAddr = results[0].formatted_address;
+            $scope.$apply();
           }
           else {
             console.log('Cannot determine address at this location.' + status);
@@ -512,75 +543,82 @@ angular.module('quickRideApp')
   .controller('RewardsCtrl', ['$scope', function ($scope) {
 
   }]).controller('RideCtrl', ['$scope', function ($scope) {
-    /*   var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
-     var mapOptions = {
-     center: myLatlng,
-     zoom: 12,
-     disableDefaultUI: true,
-     mapTypeId: google.maps.MapTypeId.ROADMAP
-     };
-     $scope.map = new google.maps.Map(document.getElementById("map"),
-     mapOptions);
-     navigator.geolocation.getCurrentPosition(function (pos) {
-     var myLatLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-     $scope.map.setCenter(myLatLng);
-     $scope.map.setZoom(16);
-     var circle = new google.maps.Circle({
-     center: myLatLng,
-     radius: pos.coords.accuracy,
-     map: $scope.map,
-     fillColor: '#ABD8E6',
-     fillOpacity: 0.5,
-     strokeColor: '#ABD8E6',
-     strokeOpacity: 1.0
-     });
-     var circle1 = new google.maps.Circle({
-     center: myLatLng,
-     radius: 1,
-     map: $scope.map,
-     fillColor: '#00BDFE',
-     fillOpacity: 1.0,
-     strokeColor: '#00BDFE',
-     strokeOpacity: 1.0
-     });
-     var marker = new google.maps.Marker({
-     position: myLatLng,
-     draggable: true,
-     animation: google.maps.Animation.DROP,
-     map: $scope.map,
-     title: 'Hello World!'
-     });
-
-     google.maps.event.addListener(marker, 'dragend', function () {
-     geocodePosition(marker.getPosition());
-     });
-     }, function (error) {
-     alert('Unable to get location: ' + error.message);
-     });
-     function geocodePosition(pos) {
-     geocoder = new google.maps.Geocoder();
-     geocoder.geocode
-     ({
-     latLng: pos
-     },
-     function (results, status) {
-     if (status == google.maps.GeocoderStatus.OK) {
-     console.log(results[0].formatted_address);
-     }
-     else {
-     console.log('Cannot determine address at this location.' + status);
-     }
-     }
-     );
-     }*/
-  }]).controller('OfferRideCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', 'ProfileService', function ($scope, rideManagementService, authenticationService, profileService) {
+}]).controller('OfferRideCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', 'ProfileService', function ($scope, rideManagementService, authenticationService, profileService) {
   profileService.getVehicle(authenticationService.getPhone()).success(function (data) {
     $scope.vehicle = data.resultData;
   }).error(function (data) {
     console.log(data);
   });
-  $scope.maxRating = [1,2,3,4,5];
+  $scope.$parent.selectedTab = 0;
+  $scope.maxRating = [1, 2, 3, 4, 5];
+  $scope.$parent.selectedIndex = -1;
+  $scope.selectedIndex = -1;
+  $scope.flip = function ($index) {
+    if ($index !== $scope.selectedIndex) {
+      $scope.$parent.selectedIndex = $index;
+      $scope.selectedIndex = $index;
+    }
+    else {
+      $scope.selectedIndex = -1;
+      $scope.$parent.selectedIndex = -1;
+    }
+  };
+  $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
+  $scope.fromAddr = sessionStorage.getItem("fromAddress");
+  $scope.fromLat = sessionStorage.getItem("fromLat");
+  $scope.fromLng = sessionStorage.getItem("fromLng");
+  getRides();
+  google.maps.event.addListener($scope.from, 'place_changed', function () {
+    var place = $scope.from.getPlace();
+    sessionStorage.setItem("fromAddress",place.formatted_address);
+    sessionStorage.setItem("fromLat",place.geometry.location.lat());
+    sessionStorage.setItem("fromLng",place.geometry.location.lng());
+    $scope.fromAddr = place.formatted_address;
+    $scope.fromLat = place.geometry.location.lat();
+    $scope.fromLng = place.geometry.location.lng();
+    getRides();
+  });
+  $scope.to = new google.maps.places.Autocomplete(document.getElementById('to'));
+  google.maps.event.addListener($scope.to, 'place_changed', function () {
+    var place = $scope.to.getPlace();
+    sessionStorage.setItem("toAddress",place.formatted_address);
+    sessionStorage.setItem("toLat",place.geometry.location.lat());
+    sessionStorage.setItem("toLng",place.geometry.location.lng());
+    $scope.toAddr = place.formatted_address;
+    $scope.toLat = place.geometry.location.lat();
+    $scope.toLng = place.geometry.location.lng();
+    getRides();
+  });
+
+  function getRides(){
+    if($scope.toAddr) {
+      rideManagementService.getPassengerRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date(),$scope.toLat, $scope.toLng).success(function (data) {
+        $scope.riderRides = data.resultData;
+      }).error(function (data) {
+        console.log(data);
+      });
+    }else {
+      rideManagementService.getPassengerRides(authenticationService.getPhone(),$scope.fromLat, $scope.fromLng, new Date()).success(function (data) {
+        $scope.riderRides = data.resultData;
+      }).error(function (data) {
+        console.log(data);
+      });
+    }
+  }
+
+  $scope.offerRide = function () {
+    if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
+      rideManagementService.offerRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), $scope.vehicle.fare, $scope.vehicle.capacity, $scope.vehicle.model, new Date()).success(function (data) {
+        console.log(data);
+      }).error(function (data) {
+        console.log(data);
+      });
+    }
+  };
+}]).controller('FindRideCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', function ($scope, rideManagementService, authenticationService) {
+  $scope.$parent.selectedTab = 1;
+  $scope.maxRating = [1, 2, 3, 4, 5];
   $scope.$parent.selectedIndex = -1;
   $scope.selectedIndex = -1;
   $scope.flip = function ($index) {
@@ -595,64 +633,50 @@ angular.module('quickRideApp')
   };
   $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
 
+  $scope.fromAddr = sessionStorage.getItem("fromAddress");
+  $scope.fromLat = sessionStorage.getItem("fromLat");
+  $scope.fromLng = sessionStorage.getItem("fromLng");
+  getRides();
   google.maps.event.addListener($scope.from, 'place_changed', function () {
     var place = $scope.from.getPlace();
-    place.formatted_address;
-    place.geometry.location.lat();
-    place.geometry.location.lng();
-    rideManagementService.getPassengerRides(authenticationService.getPhone(), place.geometry.location.lat(), place.geometry.location.lng(), new Date()).success(function (data) {
-      $scope.riderRides = data.resultData;
-    }).error(function (data) {
-      console.log(data);
-    });
+    sessionStorage.setItem("fromAddress",place.formatted_address);
+    sessionStorage.setItem("fromLat",place.geometry.location.lat());
+    sessionStorage.setItem("fromLng",place.geometry.location.lng());
+    $scope.fromAddr = place.formatted_address;
+    $scope.fromLat = place.geometry.location.lat();
+    $scope.fromLng = place.geometry.location.lng();
+    getRides();
   });
   $scope.to = new google.maps.places.Autocomplete(document.getElementById('to'));
   google.maps.event.addListener($scope.to, 'place_changed', function () {
     var place = $scope.to.getPlace();
-    place.formatted_address;
-    place.geometry.location.lat();
-    place.geometry.location.lng();
-    rideManagementService.getPassengerRides(authenticationService.getPhone(), place.geometry.location.lat(), place.geometry.location.lng(), new Date(),place.geometry.location.lat(),place.geometry.location.lng()).success(function (data) {
+    sessionStorage.setItem("toAddress",place.formatted_address);
+    sessionStorage.setItem("toLat",place.geometry.location.lat());
+    sessionStorage.setItem("toLng",place.geometry.location.lng());
+    $scope.toAddr = place.formatted_address;
+    $scope.toLat = place.geometry.location.lat();
+    $scope.toLng = place.geometry.location.lng();
+    getRides();
+  });
+function getRides(){
+  if($scope.toAddr) {
+    rideManagementService.getRiderRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date(),$scope.toLat, $scope.toLng).success(function (data) {
       $scope.riderRides = data.resultData;
     }).error(function (data) {
       console.log(data);
     });
-  });
-
-  $scope.offerRide = function () {
-    if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
-      rideManagementService.offerRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), $scope.vehicle.fare, $scope.vehicle.capacity, $scope.vehicle.model, new Date()).success(function (data) {
-        console.log(data);
-      }).error(function (data) {
-        console.log(data);
-      });
-    }
-  };
-}]).controller('FindRideCtrl', ['$scope', 'RideManagementService', 'AuthenticationService', function ($scope, rideManagementService, authenticationService) {
-  $scope.from = new google.maps.places.Autocomplete(document.getElementById('from'));
-  google.maps.event.addListener($scope.from, 'place_changed', function () {
-    var place = $scope.from.getPlace();
-    place.formatted_address;
-    place.geometry.location.lat();
-    place.geometry.location.lng();
-    rideManagementService.getRiderRides(authenticationService.getPhone(), place.geometry.location.lat(), place.geometry.location.lng(), new Date()).success(function (data) {
+  }else {
+    rideManagementService.getRiderRides(authenticationService.getPhone(),$scope.fromLat, $scope.fromLng, new Date()).success(function (data) {
       $scope.riderRides = data.resultData;
     }).error(function (data) {
       console.log(data);
-    })
-  });
-  $scope.to = new google.maps.places.Autocomplete(document.getElementById('to'));
-  google.maps.event.addListener($scope.to, 'place_changed', function () {
-    var place = $scope.to.getPlace();
-    place.formatted_address;
-    place.geometry.location.lat();
-    place.geometry.location.lng();
-  });
-
+    });
+  }
+  }
   $scope.requestRide = function () {
     if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
       rideManagementService.requestRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), new Date()).success(function (data) {
-       console.log(data);
+        console.log(data);
       }).error(function (data) {
         console.log(data);
       });

@@ -194,23 +194,23 @@ angular.module('quickRideApp')
       var year = '' + startTime.getFullYear();
       var hour = '' + startTime.getHours();
       var minutes = '' + startTime.getMinutes();
-      var url = 'startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&id=0&userId=8095054296';
-
-      if(endLatitude && endLongitude){
-        url = url+'&endLatitude ='+endLatitude+'&endLongitude='+endLongitude;
-      }
 
       if (month.length < 2) month = '0' + month;
       if (day.length < 2) day = '0' + day;
       if (hour.length < 2) hour = '0' + hour;
       if (minutes.length < 2) minutes = '0' + minutes;
+      var url = 'startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&userId=8095054296';
+
+      if(endLatitude && endLongitude){
+        url = url+'&endLatitude ='+endLatitude+'&endLongitude='+endLongitude;
+      }
       var urlOpts = {
         method: 'GET',
         url: BASE_URL + 'QRRidematcher/passengers/location?'+url
         };
       return $http(urlOpts);
     },
-    getRiderRides: function (userId, startLatitude, startLongitude, startTime) {
+    getRiderRides: function (userId, startLatitude, startLongitude, startTime,endLatitude,endLongitude) {
       var month = '' + (startTime.getMonth() + 1);
       var day = '' + startTime.getDate();
       var year = '' + startTime.getFullYear();
@@ -221,9 +221,14 @@ angular.module('quickRideApp')
       if (day.length < 2) day = '0' + day;
       if (hour.length < 2) hour = '0' + hour;
       if (minutes.length < 2) minutes = '0' + minutes;
+      var url = 'startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&userId=8095054296';
+
+      if(endLatitude && endLongitude){
+        url = url+'&endLatitude ='+endLatitude+'&endLongitude='+endLongitude;
+      }
       var urlOpts = {
         method: 'GET',
-        url: BASE_URL + 'QRRidematcher/rides/location?startLongitude=' + startLongitude + '&startTime=' + day + month + year + hour + minutes + '&startLatitude=' + startLatitude + '&id=0&userId=8095054296'
+        url: BASE_URL + 'QRRidematcher/rides/location?'+url
       };
       return $http(urlOpts);
     },
@@ -292,6 +297,21 @@ angular.module('quickRideApp')
         method: 'PUT',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         url: BASE_URL + 'QRVehicle/update',
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj)
+            if (obj[p] !== undefined)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          return str.join("&");
+        },
+        data: vehicle
+      };
+      return $http(urlOpts);
+    },createVehicle: function (vehicle) {
+      var urlOpts = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        url: BASE_URL + 'QRVehicle',
         transformRequest: function (obj) {
           var str = [];
           for (var p in obj)
