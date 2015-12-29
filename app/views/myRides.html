@@ -23,14 +23,7 @@
            style="font-size: 12px;">
         <md-card style="position: relative;margin: 0px;padding: 5px" layout="row" flex>
           <div class="flip-container">
-            <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
-              <div class="front" md-ink-ripple>
-                <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
-              </div>
-              <div class="back" style="background-color: green" md-ink-ripple>
-                <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
-              </div>
-            </div>
+                <img style="height:25px;width: 25px;margin: auto;background: gray" src="/images/icon_passengers.png">
           </div>
           <div layout="column" flex >
             <div flex layout="row" md-ink-ripple="#008000">
@@ -81,14 +74,7 @@
            style="font-size: 12px;">
         <md-card style="position: relative;margin: 0px;padding: 5px" layout="row" flex>
           <div class="flip-container">
-            <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
-              <div class="front" md-ink-ripple>
-                <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
-              </div>
-              <div class="back" style="background-color: green" md-ink-ripple>
-                <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
-              </div>
-            </div>
+            <img style="height:25px;width: 25px;margin: auto;background: gray" src="/images/icon_passengers.png">
           </div>
           <div layout="column" flex >
             <div flex layout="row" md-ink-ripple="#008000">
@@ -131,35 +117,6 @@
         </md-card>
       </div>
     </div>
-
-   <!-- <div style="padding-right: 20px;padding-left: 20px;overflow: hidden;">
-      <div ng-repeat="ride in myRides | filter:getCompleted"
-           style="font-size: 12px;padding-top: 5px;padding-bottom: 5px">
-        <div layout="row" flex>
-          <div class="flip-container">
-            <div class="flipper" ng-click="flip($index)" ng-class="{ 'flipperflip': $index == selectedIndex }">
-              <div class="front" md-ink-ripple>
-                <img style="height:50px;width: 50px;margin: auto" ng-src="/images/default_male.png">
-              </div>
-              <div class="back" style="background-color: green" md-ink-ripple>
-                <img style="height:50px;width: 50px;margin: auto;" src="/images/icon_completed.png">
-              </div>
-            </div>
-          </div>
-          <div layout="column" flex>
-            <div flex layout="row">
-              <div style="padding-left: 20px">{{ride.userName}}</div>
-              <div flex></div>
-              <div style="padding-left: 20px" flex>Verified</div>
-              <div>Date time</div>
-            </div>
-            <div style="padding-left: 20px">*****</div>
-            <div style="padding-left: 20px">{{ride.startAddress}}</div>
-            <div style="padding-left: 20px">{{ride.endAddress}}</div>
-          </div>
-        </div>
-      </div>
-    </div>-->
   </md-tab>
 </md-tabs>
 
