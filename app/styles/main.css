@@ -303,3 +303,64 @@ md-sidenav ng-md-icon {
   top:2px;
   left:2px;
 }
+
+
+
+@media (max-width: 45rem) {
+  .time-date {
+    width: 21.1rem;
+    font-size: 0.8rem;
+  }
+  .time-date > .display {
+    width: 100%;
+    height: auto;
+    -webkit-transition: color 0.6s ease-in-out, height 0.6s ease-in-out;
+    transition: color 0.6s ease-in-out, height 0.6s ease-in-out;
+  }
+  .time-date > .display > .content {
+    position: relative;
+    width: 100%;
+    top: 0px;
+    height: 15.5rem;
+  }
+  .time-date > .control {
+    width: 100%;
+  }
+  .time-date.time-mode > .display > .content {
+    padding-top: 4.6rem;
+  }
+  .time-date.time-only > .display > .content {
+    top: 0px;
+    padding-top: 0.8rem;
+    height: 10rem;
+  }
+  .time-date.full-mode > .display {
+    display: none;
+  }
+  .time-date.full-mode > .control {
+    width: 100%;
+    height: 44.2rem;
+  }
+  .time-date.full-mode > .control > .full-title {
+    display: block;
+  }
+  .time-date.full-mode > .control > .slider {
+    float: none;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+  }
+  .time-date.full-mode > .control > .slider > .time-control,
+  .time-date.full-mode > .control > .slider > .date-control {
+    width: 100%;
+    float: left;
+  }
+
+  .time-date > .control > .slider > .date-control .day-cell{
+    font-size: 0.9rem;
+  }
+
+  .time-date[theme=material] .md-button, .time-date:not([theme]) .md-button{
+    padding: 0px;
+  }
+}

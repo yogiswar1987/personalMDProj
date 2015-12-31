@@ -434,14 +434,24 @@ angular.module('quickRideApp')
   $scope.items = [{name: "SMS"}, {name: "Gmail"}, {name: "Whatsapp"}, {name: "Facebook"}];
 
 
-}]).controller('FeedbackCtrl', ['$scope', function ($scope) {
-
-  $scope.showRating = function () {
-    console.log("Sadsads------" + $scope.feedback.ratingStar);
-  }
+}]).controller('FeedbackCtrl', ['$scope','FeedbackService','$location', function ($scope,FeedbackService,$location) {
 
 
-}]).controller('NewRideCtrl', ['$scope', '$timeout', '$rootScope','$http', function ($scope, $timeout, $rootScope,$http) {
+    $scope.submitFeedback = function () {
+      var feedback = {};
+      feedback.rating = $scope.ratingStar;
+      feedback.extraInfo = $scope.comments;
+
+      FeedbackService.submitFeedback(feedback).success(function (data) {
+
+        $location.path('#/app/newRide');
+
+      }).error(function (error) {
+
+      });
+    }
+
+}]).controller('NewRideCtrl', ['$scope', '$timeout', '$rootScope','$http','$mdDialog', function ($scope, $timeout, $rootScope,$http,$mdDialog) {
     // $rootScope.isLoading = true;
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
@@ -535,7 +545,17 @@ angular.module('quickRideApp')
         }
       );
     }
+    $scope.showCalendar = function(){
+      $mdDialog.show({
+        clickOutsideToClose: true,
+        scope: $scope,
+        preserveScope: true,
+        templateUrl: 'views/dateTimePicker.html',
+        controller: function DialogController($scope) {
 
+        }
+      });
+    };
     $timeout(function () {
       google.maps.event.trigger($scope.map, 'resize');
     })
