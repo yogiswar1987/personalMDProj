@@ -7,7 +7,8 @@ angular.module('quickRideApp', [
     'ngMdIcons',
     'ngMessages',
     'angular-carousel',
-    'ngOpenFB'
+    'ngOpenFB',
+    'scDateTime'
   ])
   .run(function ($openFB) {
     $openFB.init({appId: '1524191344558710'});

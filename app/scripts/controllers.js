@@ -434,14 +434,24 @@ angular.module('quickRideApp')
   $scope.items = [{name: "SMS"}, {name: "Gmail"}, {name: "Whatsapp"}, {name: "Facebook"}];
 
 
-}]).controller('FeedbackCtrl', ['$scope', function ($scope) {
-
-  $scope.showRating = function () {
-    console.log("Sadsads------" + $scope.feedback.ratingStar);
-  }
+}]).controller('FeedbackCtrl', ['$scope','FeedbackService','$location', function ($scope,FeedbackService,$location) {
 
 
-}]).controller('NewRideCtrl', ['$scope', '$timeout', '$rootScope', '$http', function ($scope, $timeout, $rootScope, $http) {
+    $scope.submitFeedback = function () {
+      var feedback = {};
+      feedback.rating = $scope.ratingStar;
+      feedback.extraInfo = $scope.comments;
+
+      FeedbackService.submitFeedback(feedback).success(function (data) {
+
+        $location.path('#/app/newRide');
+
+      }).error(function (error) {
+
+      });
+    }
+
+}]).controller('NewRideCtrl', ['$scope', '$timeout', '$rootScope','$http','$mdDialog', function ($scope, $timeout, $rootScope,$http,$mdDialog) {
     // $rootScope.isLoading = true;
     var myLatlng = new google.maps.LatLng(12.9715987, 77.5945627);
 
@@ -459,21 +469,21 @@ angular.module('quickRideApp')
       $scope.currentLocation = new google.maps.places.Autocomplete(document.getElementById('currentLocation'));
       geocodePosition(myLatLng);
       /*$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&?key=AIzaSyCckcroPYOjwQtN2RQUhH-gb7UldGtxJAI').success(function (data) {
-       $scope.locationAddr = data.results[0].formatted_address;
-       sessionStorage.setItem("fromAddress",data.results[0].formatted_address);
-       sessionStorage.setItem("fromLat",pos.coords.latitude);
-       sessionStorage.setItem("fromLng",pos.coords.longitude);
-       }).error(function (data) {
-       console.log(data);
-       });*/
+        $scope.locationAddr = data.results[0].formatted_address;
+        sessionStorage.setItem("fromAddress",data.results[0].formatted_address);
+        sessionStorage.setItem("fromLat",pos.coords.latitude);
+        sessionStorage.setItem("fromLng",pos.coords.longitude);
+      }).error(function (data) {
+        console.log(data);
+      });*/
 
       google.maps.event.addListener($scope.currentLocation, 'place_changed', function () {
         var place = $scope.currentLocation.getPlace();
-        sessionStorage.setItem("fromAddress", place.formatted_address);
-        sessionStorage.setItem("fromLat", place.geometry.location.lat());
-        sessionStorage.setItem("fromLng", place.geometry.location.lng());
-        $scope.marker.setPosition(place.geometry.location);
-        $scope.map.panTo(place.geometry.location);
+        sessionStorage.setItem("fromAddress",place.formatted_address);
+        sessionStorage.setItem("fromLat",place.geometry.location.lat());
+        sessionStorage.setItem("fromLng",place.geometry.location.lng());
+        $scope.marker.setPosition( place.geometry.location );
+        $scope.map.panTo( place.geometry.location );
       });
       $scope.map.setCenter(myLatLng);
       $scope.map.setZoom(16);
@@ -523,9 +533,9 @@ angular.module('quickRideApp')
         },
         function (results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            sessionStorage.setItem("fromAddress", results[0].formatted_address);
-            sessionStorage.setItem("fromLat", results[0].geometry.location.lat());
-            sessionStorage.setItem("fromLng", results[0].geometry.location.lng());
+            sessionStorage.setItem("fromAddress",results[0].formatted_address);
+            sessionStorage.setItem("fromLat",results[0].geometry.location.lat());
+            sessionStorage.setItem("fromLng",results[0].geometry.location.lng());
             $scope.locationAddr = results[0].formatted_address;
             $scope.$apply();
           }
@@ -535,7 +545,17 @@ angular.module('quickRideApp')
         }
       );
     }
+    $scope.showCalendar = function(){
+      $mdDialog.show({
+        clickOutsideToClose: true,
+        scope: $scope,
+        preserveScope: true,
+        templateUrl: 'views/dateTimePicker.html',
+        controller: function DialogController($scope) {
 
+        }
+      });
+    };
     $timeout(function () {
       google.maps.event.trigger($scope.map, 'resize');
     })
@@ -609,9 +629,9 @@ angular.module('quickRideApp')
   getRides();
   google.maps.event.addListener($scope.from, 'place_changed', function () {
     var place = $scope.from.getPlace();
-    sessionStorage.setItem("fromAddress", place.formatted_address);
-    sessionStorage.setItem("fromLat", place.geometry.location.lat());
-    sessionStorage.setItem("fromLng", place.geometry.location.lng());
+    sessionStorage.setItem("fromAddress",place.formatted_address);
+    sessionStorage.setItem("fromLat",place.geometry.location.lat());
+    sessionStorage.setItem("fromLng",place.geometry.location.lng());
     $scope.fromAddr = place.formatted_address;
     $scope.fromLat = place.geometry.location.lat();
     $scope.fromLng = place.geometry.location.lng();
@@ -620,24 +640,24 @@ angular.module('quickRideApp')
   $scope.to = new google.maps.places.Autocomplete(document.getElementById('to'));
   google.maps.event.addListener($scope.to, 'place_changed', function () {
     var place = $scope.to.getPlace();
-    sessionStorage.setItem("toAddress", place.formatted_address);
-    sessionStorage.setItem("toLat", place.geometry.location.lat());
-    sessionStorage.setItem("toLng", place.geometry.location.lng());
+    sessionStorage.setItem("toAddress",place.formatted_address);
+    sessionStorage.setItem("toLat",place.geometry.location.lat());
+    sessionStorage.setItem("toLng",place.geometry.location.lng());
     $scope.toAddr = place.formatted_address;
     $scope.toLat = place.geometry.location.lat();
     $scope.toLng = place.geometry.location.lng();
     getRides();
   });
 
-  function getRides() {
-    if ($scope.toAddr) {
-      rideManagementService.getPassengerRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date(), $scope.toLat, $scope.toLng).success(function (data) {
+  function getRides(){
+    if($scope.toAddr) {
+      rideManagementService.getPassengerRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date(),$scope.toLat, $scope.toLng).success(function (data) {
         $scope.riderRides = data.resultData;
       }).error(function (data) {
         console.log(data);
       });
-    } else {
-      rideManagementService.getPassengerRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date()).success(function (data) {
+    }else {
+      rideManagementService.getPassengerRides(authenticationService.getPhone(),$scope.fromLat, $scope.fromLng, new Date()).success(function (data) {
         $scope.riderRides = data.resultData;
       }).error(function (data) {
         console.log(data);
@@ -677,9 +697,9 @@ angular.module('quickRideApp')
   getRides();
   google.maps.event.addListener($scope.from, 'place_changed', function () {
     var place = $scope.from.getPlace();
-    sessionStorage.setItem("fromAddress", place.formatted_address);
-    sessionStorage.setItem("fromLat", place.geometry.location.lat());
-    sessionStorage.setItem("fromLng", place.geometry.location.lng());
+    sessionStorage.setItem("fromAddress",place.formatted_address);
+    sessionStorage.setItem("fromLat",place.geometry.location.lat());
+    sessionStorage.setItem("fromLng",place.geometry.location.lng());
     $scope.fromAddr = place.formatted_address;
     $scope.fromLat = place.geometry.location.lat();
     $scope.fromLng = place.geometry.location.lng();
@@ -688,30 +708,29 @@ angular.module('quickRideApp')
   $scope.to = new google.maps.places.Autocomplete(document.getElementById('to'));
   google.maps.event.addListener($scope.to, 'place_changed', function () {
     var place = $scope.to.getPlace();
-    sessionStorage.setItem("toAddress", place.formatted_address);
-    sessionStorage.setItem("toLat", place.geometry.location.lat());
-    sessionStorage.setItem("toLng", place.geometry.location.lng());
+    sessionStorage.setItem("toAddress",place.formatted_address);
+    sessionStorage.setItem("toLat",place.geometry.location.lat());
+    sessionStorage.setItem("toLng",place.geometry.location.lng());
     $scope.toAddr = place.formatted_address;
     $scope.toLat = place.geometry.location.lat();
     $scope.toLng = place.geometry.location.lng();
     getRides();
   });
-  function getRides() {
-    if ($scope.toAddr) {
-      rideManagementService.getRiderRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date(), $scope.toLat, $scope.toLng).success(function (data) {
-        $scope.riderRides = data.resultData;
-      }).error(function (data) {
-        console.log(data);
-      });
-    } else {
-      rideManagementService.getRiderRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date()).success(function (data) {
-        $scope.riderRides = data.resultData;
-      }).error(function (data) {
-        console.log(data);
-      });
-    }
+function getRides(){
+  if($scope.toAddr) {
+    rideManagementService.getRiderRides(authenticationService.getPhone(), $scope.fromLat, $scope.fromLng, new Date(),$scope.toLat, $scope.toLng).success(function (data) {
+      $scope.riderRides = data.resultData;
+    }).error(function (data) {
+      console.log(data);
+    });
+  }else {
+    rideManagementService.getRiderRides(authenticationService.getPhone(),$scope.fromLat, $scope.fromLng, new Date()).success(function (data) {
+      $scope.riderRides = data.resultData;
+    }).error(function (data) {
+      console.log(data);
+    });
   }
-
+  }
   $scope.requestRide = function () {
     if ($scope.from.getPlace().geometry && $scope.to.getPlace().geometry) {
       rideManagementService.requestRide(authenticationService.getPhone(), $scope.from.getPlace().formatted_address, $scope.from.getPlace().geometry.location.lat(), $scope.from.getPlace().geometry.location.lng(), $scope.to.getPlace().formatted_address, $scope.to.getPlace().geometry.location.lat(), $scope.to.getPlace().geometry.location.lng(), new Date()).success(function (data) {

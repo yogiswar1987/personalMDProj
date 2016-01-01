@@ -21,11 +21,11 @@
 
   <div layout="row" layout-align="center" style="position: absolute;bottom: 25px;width: 100%" class="layout-align-space-between-center">
     <div layout="column" flex="40">
-      <md-button class="md-raised md-primary" ui-sref="app.ride.offerRide" href="#/auth/signUp">Ride Now</md-button>
+      <md-button class="md-raised md-primary" ui-sref="app.ride.offerRide">Ride Now</md-button>
       </a>
     </div>
     <div layout="column" flex="40">
-      <md-button class="md-raised md-primary" href="#/auth/login">Ride Later</md-button>
+      <md-button class="md-raised md-primary" ng-click="showCalendar()">Ride Later</md-button>
     </div>
   </div>
 </md-content>
