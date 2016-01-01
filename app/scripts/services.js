@@ -339,4 +339,37 @@ angular.module('quickRideApp')
       });
     }
   }
+}]).factory('RewardsService', ['$http', function ($http) {
+  return {
+    getAccount: function (userId) {
+      var urlOpts = {
+        method: 'GET',
+        url: BASE_URL + 'QRAccount?accountid=' + userId
+      };
+      return $http(urlOpts);
+    },
+    getTransactionHistory: function (userId) {
+      var urlOpts = {
+        method: 'GET',
+        url: BASE_URL + 'QRAccount?accountid=' + userId
+      };
+      return $http(urlOpts);
+    },
+    encash: function (userId,points) {
+      var urlOpts = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        url: BASE_URL + 'QRAccount/balance/encash',
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj)
+            if (obj[p] !== undefined)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          return str.join("&");
+        },
+        data: {accountid:userId,points:points}
+      };
+      return $http(urlOpts);
+    }
+  }
 }]);

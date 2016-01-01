@@ -17,10 +17,10 @@
       <div class="divMargin divLayout" style="margin-right:2%;">
         <div layout="row" layout-align="center">
           <div layout="column" flex="60">
-            <span class="md-body-1">100 points</span>
+            <span class="md-body-1">{{balance}} points</span>
           </div>
-          <div layout="column" flex="40">
-            <span class="md-body-1">Transactions</span>
+          <div layout="row" flex="40">
+            <img src="images/view_history.png" style="height: 25px;width: 25px"><span class="md-body-1">Transactions</span>
           </div>
         </div>
 
@@ -31,26 +31,61 @@
         </div>
 
         <div layout="row" class="divMargin">
-          <md-button class="md-transparent rewardButtonStyle">100</md-button>
-          <md-button class="md-transparent rewardButtonStyle">200</md-button>
-          <md-button class="md-transparent rewardButtonStyle">500</md-button>
-          <md-button class="md-transparent rewardButtonStyle">1000</md-button>
+          <md-button class="md-transparent rewardButtonStyle" ng-click="addAmount(100)">100</md-button>
+          <md-button class="md-transparent rewardButtonStyle" ng-click="addAmount(200)">200</md-button>
+          <md-button class="md-transparent rewardButtonStyle" ng-click="addAmount(500)">500</md-button>
+          <md-button class="md-transparent rewardButtonStyle" ng-click="addAmount(1000)">1000</md-button>
         </div>
+        <form method="post" action="https://test.payu.in/_payment">
+          <input type="hidden" name="continueUrl" value="http://shop.url/continue">
+          <input type="hidden" name="currencyCode" value="PLN">
+          <input type="hidden" name="customerIp" value="123.123.123.123">
+          <input type="hidden" name="description" value="Order description">
+          <input type="hidden" name="merchantPosId" value="145227">
+          <input type="hidden" name="notifyUrl" value="http://shop.url/notify">
+          <input type="hidden" name="products[0].name" value="Product 1">
+          <input type="hidden" name="products[0].quantity" value="1">
+          <input type="hidden" name="products[0].unitPrice" value="1000">
+          <input type="hidden" name="totalAmount" value="1000">
+          <input type="hidden" name="OpenPayu-Signature"
+                 value="sender=145227;algorithm=MD5;signature=5fa8d94670eee6d182e930a0ccf9c2c6">
+          <button type="submit" formtarget="_blank">Pay with PayU</button>
+        </form>
 
-        <div layout="row" class="divMargin">
-          <md-input-container md-no-float layout="column" flex="70">
-            <input type="text" placeholder="Amount to recharge(Rs 5- 10000)">
-          </md-input-container>
+        <form name="rewardsForm" method="post" action="https://secure.payu.com/api/v2_1/orders" novalidate>
+          <input type="hidden" name="continueUrl" value="http://shop.url/continue">
+          <input type="hidden" name="currencyCode" value="PLN">
+          <input type="hidden" name="customerIp" value="123.123.123.123">
+          <input type="hidden" name="description" value="Order description">
+          <input type="hidden" name="merchantPosId" value="145227">
+          <input type="hidden" name="notifyUrl" value="http://shop.url/notify">
+          <input type="hidden" name="products[0].name" value="Product 1">
+          <input type="hidden" name="products[0].quantity" value="1">
 
-          <span layout="column" flex="30" style="background-color:cornsilk;height:32px;">1 point = 1 Rs</span>
-        </div>
+          <input type="hidden" name="products[0].unitPrice" value="10000">
 
-        <div layout layout-align="center center">
-          <md-button class="md-raised md-primary" class="md-clear" flex="100">
-            Recharge
-          </md-button>
-        </div>
+          <div layout="row" class="divMargin">
+            <md-input-container md-no-float layout="column" flex="70">
+              <label>Amount to recharge(Rs 5- 10000)</label>
+              <input type="number" ng-model="amount" name="totalAmount" required min="5" max="10001">
 
+              <div ng-messages="rewardsForm.amount.$error" ng-if="rewardsForm.$submitted">
+                <div ng-message="min">Amount to recharge(Rs 5- 10000)</div>
+                <div ng-message="max">Amount to recharge(Rs 5- 10000)</div>
+                <div ng-message="required">Phone number required</div>
+              </div>
+            </md-input-container>
+            <input type="hidden" name="OpenPayu-Signature"
+                   value="sender=145227;algorithm=MD5;signature=5fa8d94670eee6d182e930a0ccf9c2c6">
+            <span layout="column" flex="30" style="background-color:cornsilk;height:32px;">1 point = 1 Rs</span>
+          </div>
+
+          <div layout layout-align="center center">
+            <md-button class="md-raised md-primary" class="md-clear" flex="100" type="submit" formtarget="_blank">
+              Recharge
+            </md-button>
+          </div>
+        </form>
         <div layout="row" class="divMargin">
           <span class="md-body-1" style="color:darkgrey;">Quick Ride wallet is safe and fully refundable</span>
         </div>
@@ -65,10 +100,10 @@
       <div class="divMargin divLayout" style="margin-right:2%;">
         <div layout="row" layout-align="center">
           <div layout="column" flex="60">
-            <span class="md-body-1">100 points</span>
+            <span class="md-body-1">{{balance}} points</span>
           </div>
-          <div layout="column" flex="40">
-            <span class="md-body-1">Transactions</span>
+          <div layout="row" flex="40">
+            <img src="images/view_history.png" style="height: 25px;width: 25px"><span class="md-body-1" style="text-align: center;margin-top: auto;margin-left: 8px">Transactions</span>
           </div>
         </div>
 
@@ -77,20 +112,26 @@
         <div layout="row" class="divMargin">
           <span class="md-body-2">Go ahead and encash your points</span>
         </div>
+        <form name="encashForm" novalidate>
+          <div layout="row" layout-align="center" class="divMargin">
+            <md-input-container md-no-float flex="100">
+              <label>Points to be encashed</label>
+              <input type="number" name="points" ng-model="points" ng-minlength="3" required>
+              <div ng-messages="encashForm.points.$error" ng-if="encashForm.$submitted">
+                <div ng-message="required">Points required to encash</div>
+                <div ng-message="amountless">Amount should be lesser than balance</div>
+                <div ng-message="minlength">Amount should be atleast 100</div>
+              </div>
+            </md-input-container>
+          </div>
 
-        <div layout="row" layout-align="center" class="divMargin">
-          <md-input-container md-no-float flex="100">
-            <input type="text" placeholder="Enter number of points to encash">
-          </md-input-container>
-        </div>
+          <div layout="row" layout-align="center center">
+            <md-button class="md-raised md-primary"  flex="100" ng-click="encash(encashForm)">
+              Encash
+            </md-button>
+          </div>
+        </form>
 
-        <div layout="row" layout-align="center center">
-          <md-button class="md-raised md-primary" class="md-clear" flex="100">
-            Encash
-          </md-button>
-        </div>
-
-        <div class="divMargin" style="border-bottom: 1px darkgrey dotted;"></div>
 
         <div layout="row" class="divMargin">
           <span class="md-body-1">Quick ride will issue petro card for every rider</span>
@@ -103,7 +144,7 @@
         <div layout="row" class="divMargin">
           <span class="md-body-1">Reedeem your points at authorized petrol pump</span>
         </div>
-        </div>
+      </div>
     </md-tab-body>
   </md-tab>
 </md-tabs>
