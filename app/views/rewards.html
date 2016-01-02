@@ -53,22 +53,11 @@
           <button type="submit" formtarget="_blank">Pay with PayU</button>
         </form>
 
-        <form name="rewardsForm" method="post" action="https://secure.payu.com/api/v2_1/orders" novalidate>
-          <input type="hidden" name="continueUrl" value="http://shop.url/continue">
-          <input type="hidden" name="currencyCode" value="PLN">
-          <input type="hidden" name="customerIp" value="123.123.123.123">
-          <input type="hidden" name="description" value="Order description">
-          <input type="hidden" name="merchantPosId" value="145227">
-          <input type="hidden" name="notifyUrl" value="http://shop.url/notify">
-          <input type="hidden" name="products[0].name" value="Product 1">
-          <input type="hidden" name="products[0].quantity" value="1">
-
-          <input type="hidden" name="products[0].unitPrice" value="10000">
-
+        <form name="rewardsForm" novalidate>
           <div layout="row" class="divMargin">
             <md-input-container md-no-float layout="column" flex="70">
               <label>Amount to recharge(Rs 5- 10000)</label>
-              <input type="number" ng-model="amount" name="totalAmount" required min="5" max="10001">
+              <input type="number" ng-model="amount" name="amount" required min="5" max="10001">
 
               <div ng-messages="rewardsForm.amount.$error" ng-if="rewardsForm.$submitted">
                 <div ng-message="min">Amount to recharge(Rs 5- 10000)</div>
@@ -76,13 +65,11 @@
                 <div ng-message="required">Phone number required</div>
               </div>
             </md-input-container>
-            <input type="hidden" name="OpenPayu-Signature"
-                   value="sender=145227;algorithm=MD5;signature=5fa8d94670eee6d182e930a0ccf9c2c6">
             <span layout="column" flex="30" style="background-color:cornsilk;height:32px;">1 point = 1 Rs</span>
           </div>
 
           <div layout layout-align="center center">
-            <md-button class="md-raised md-primary" class="md-clear" flex="100" type="submit" formtarget="_blank">
+            <md-button class="md-raised md-primary" class="md-clear" flex="100" ng-click="recharge($event,rewardsForm)">
               Recharge
             </md-button>
           </div>
