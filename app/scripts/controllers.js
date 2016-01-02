@@ -570,7 +570,7 @@ angular.module('quickRideApp')
     }).error(function(data){
 
     });
-    $scope.selectedTab = 1;
+    $scope.selectedTab = 0;
     $scope.addAmount = function (amount) {
       $scope.amount = ($scope.amount ? $scope.amount : 0) + amount;
     };
@@ -769,4 +769,13 @@ function getRides(){
   }).error(function (data) {
     console.log(data);
   })
+}]).controller('TransactionsCtrl', ['$scope', 'RewardsService','AuthenticationService', function ($scope, rewardsService,AuthenticationService) {
+
+  rewardsService.getTransactions(AuthenticationService.getPhone()).success(function (data) {
+    $scope.transactions = data.resultData;
+    console.log(data);
+  }).error(function (data) {
+    console.log(data);
+  });
+
 }]);

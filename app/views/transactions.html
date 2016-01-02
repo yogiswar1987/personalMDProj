@@ -1,0 +1,22 @@
+<md-toolbar style="background-color: whitesmoke !important;min-height: 50px !important;">
+  <div class="md-toolbar-tools" style="padding: 0px;height: 50px">
+    <div ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+      <ng-md-icon style=" fill:black" icon="menu"></ng-md-icon>
+    </div>
+    <div layout="row">
+      <img src="images/logo.png" style="height: 20px;width: 20px">
+
+      <h1 style="padding-left: 10px;">Transactions</h1>
+    </div>
+  </div>
+</md-toolbar>
+<div style="margin-top: 10px;overflow: hidden;">
+  <div ng-repeat="transaction in transactions"
+       style="font-size: 12px;">
+    <md-card style="position: relative;margin: 0px;padding: 5px" layout="row" flex>
+      <div>
+        {{transaction}}
+      </div>
+    </md-card>
+  </div>
+</div>

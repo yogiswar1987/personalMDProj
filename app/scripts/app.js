@@ -63,7 +63,11 @@ angular.module('quickRideApp', [
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
       })
-
+      .state('app.transactions', {
+        url: '/transactions',
+        templateUrl: 'views/transactions.html',
+        controller: 'TransactionsCtrl'
+      })
       .state('app.search', {
         url: '/search',
         views: {

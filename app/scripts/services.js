@@ -376,7 +376,14 @@ angular.module('quickRideApp')
         data: {accountid:userId,points:points}
       };
       return $http(urlOpts);
-    }
+    },
+    getTransactions:function(userId){
+      var urlOpts = {
+        method: 'GET',
+        url: BASE_URL + 'QRAccount/transactions?accountid=' + userId
+      };
+      return $http(urlOpts);
+  }
   }
 }]);
 
